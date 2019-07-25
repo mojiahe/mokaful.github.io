@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://mojiahe.github.io/mokaful.github.io">
-  <title>Kafka基本命令 | Mokaful&#39;s Blog</title>
+  <title>Tag: Spark | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.kafka-topic创建话题1bin/kafka-topics.sh --create --topic test --replication-factor 1 --partitions 3 --zookeeper localhost:2181 删除话题1bin/kafka-topics.sh --zookeeper emr-header-1:2181 --delete --topic flu">
-<meta name="keywords" content="Kafka">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Kafka基本命令">
-<meta property="og:url" content="https://mojiahe.github.io/mokaful.github.io/2019/07/23/2019-07-23-Kafka基本命令/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Mokaful&#39;s Blog">
+<meta property="og:url" content="https://mojiahe.github.io/mokaful.github.io/tags/Spark/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
-<meta property="og:description" content="1.kafka-topic创建话题1bin/kafka-topics.sh --create --topic test --replication-factor 1 --partitions 3 --zookeeper localhost:2181 删除话题1bin/kafka-topics.sh --zookeeper emr-header-1:2181 --delete --topic flu">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-23T08:45:28.530Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kafka基本命令">
-<meta name="twitter:description" content="1.kafka-topic创建话题1bin/kafka-topics.sh --create --topic test --replication-factor 1 --partitions 3 --zookeeper localhost:2181 删除话题1bin/kafka-topics.sh --zookeeper emr-header-1:2181 --delete --topic flu">
+<meta name="twitter:title" content="Mokaful&#39;s Blog">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -167,85 +162,52 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2019-07-23-Kafka基本命令" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Kafka基本命令
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/mokaful.github.io/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/mokaful.github.io/2019/07/25/2019-07-25-Spark合并小文件/" class="archive-article-date">
+  	<time datetime="2019-07-25T07:36:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-25</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/mokaful.github.io/2019/07/25/2019-07-25-Spark合并小文件/">2019-07-25-Spark合并小文件</a>
     </h1>
   
 
-        
-        <a href="/mokaful.github.io/2019/07/23/2019-07-23-Kafka基本命令/" class="archive-article-date">
-  	<time datetime="2019-07-23T08:19:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-23</time>
-</a>
-        
-       
-            <span class="archive-article-date">
-              阅读量 <span id="busuanzi_value_page_pv"></span>
-            </span>
-        
-         <!-- 开始添加字数统计-->
-        
-          <div class="archive-article-date">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">697字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">4分</span>
-      </span>
-    </span>
-</div>
+        <div class="article-info info-on-right">
           
-        <!-- 添加完成 -->
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-  
-    <h2 id="1-kafka-topic"><a href="#1-kafka-topic" class="headerlink" title="1.kafka-topic"></a>1.kafka-topic</h2><h3 id="创建话题"><a href="#创建话题" class="headerlink" title="创建话题"></a>创建话题</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --create --topic test --replication-factor 1 --partitions 3 --zookeeper localhost:2181</span><br></pre></td></tr></table></figure>
-<h3 id="删除话题"><a href="#删除话题" class="headerlink" title="删除话题"></a>删除话题</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper emr-header-1:2181 --delete --topic flume_test3</span><br></pre></td></tr></table></figure>
-<h3 id="查看topic信息"><a href="#查看topic信息" class="headerlink" title="查看topic信息"></a>查看topic信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper kafka1.tanwan.com:2181 --describe --topic loginLogSource</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">Topic:loginLogSource    PartitionCount:60       ReplicationFactor:3     Configs:min.insync.replicas=2,preallocate=true</span><br><span class="line">    Topic: loginLogSource   Partition: 0    Leader: 167     Replicas: 167,165,166   Isr: 167,165,166</span><br><span class="line">    Topic: loginLogSource   Partition: 1    Leader: 165     Replicas: 165,166,167   Isr: 167,166,165</span><br><span class="line">    Topic: loginLogSource   Partition: 2    Leader: 166     Replicas: 166,167,165   Isr: 167,166,165</span><br><span class="line">    Topic: loginLogSource   Partition: 3    Leader: 167     Replicas: 167,166,165   Isr: 167,166,165</span><br><span class="line">    Topic: loginLogSource   Partition: 4    Leader: 165     Replicas: 165,167,166   Isr: 167,165,166</span><br></pre></td></tr></table></figure>
-<h2 id="2-kafka-console-consumer"><a href="#2-kafka-console-consumer" class="headerlink" title="2.kafka-console-consumer"></a>2.kafka-console-consumer</h2><h3 id="控制台消费者"><a href="#控制台消费者" class="headerlink" title="控制台消费者"></a>控制台消费者</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --bootstrap-server=kafka1.tanwan.com:9092 --topic loginLogSource --from-beginning --consumer-property group.id=test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e3</span><br></pre></td></tr></table></figure>
-<h2 id="3-kafka-console-producer"><a href="#3-kafka-console-producer" class="headerlink" title="3.kafka-console-producer"></a>3.kafka-console-producer</h2><h3 id="控制台生产者"><a href="#控制台生产者" class="headerlink" title="控制台生产者"></a>控制台生产者</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test</span><br></pre></td></tr></table></figure>
-<h2 id="4-kafka-consumer-groups"><a href="#4-kafka-consumer-groups" class="headerlink" title="4.kafka-consumer-groups"></a>4.kafka-consumer-groups</h2><h3 id="查看某组的offset"><a href="#查看某组的offset" class="headerlink" title="查看某组的offset"></a>查看某组的offset</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server  kafka1.tanwan.com:9092 --describe --group test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e3</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">GROUP                          				   TOPIC        		  PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  	   LAG             OWNER</span><br><span class="line">test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e32 loginLogSource                 0          6418677         8164343         1745666         consumer-1_/14.23.149.188</span><br><span class="line">test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e32 loginLogSource                 1          6415908         8162106         1746198         consumer-1_/14.23.149.188</span><br><span class="line">test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e32 loginLogSource                 2          6411723         8157118         1745395         consumer-1_/14.23.149.188</span><br></pre></td></tr></table></figure>
-<h3 id="重置消费者offset"><a href="#重置消费者offset" class="headerlink" title="重置消费者offset"></a>重置消费者offset</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server kafka1.tanwan.com:9092 --group test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e3 --reset-offsets --to-offset 0 --topic loginLogSource --execute</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">[2019-06-12 00:15:17,433] WARN New offset (0) is lower than earliest offset for topic partition loginLogSource-11. Value will be set to 6416005 (kafka.admin.ConsumerGroupCommand$)</span><br><span class="line">[2019-06-12 00:15:17,433] WARN New offset (0) is lower than earliest offset for topic partition loginLogSource-4. Value will be set to 6416083 (kafka.admin.ConsumerGroupCommand$)</span><br><span class="line">[2019-06-12 00:15:17,434] WARN New offset (0) is lower than earliest offset for topic partition loginLogSource-59. Value will be set to 6418753 (kafka.admin.ConsumerGroupCommand$)</span><br><span class="line">[2019-06-12 00:15:17,434] WARN New offset (0) is lower than earliest offset for topic partition loginLogSource-46. Value will be set to 6415107 (kafka.admin.ConsumerGroupCommand$)</span><br><span class="line">..............</span><br><span class="line">TOPIC                          PARTITION  NEW-OFFSET</span><br><span class="line">loginLogSource                 11         6416005</span><br><span class="line">loginLogSource                 4          6416083</span><br><span class="line">loginLogSource                 59         6418753</span><br><span class="line">loginLogSource                 46         6415107</span><br><span class="line">loginLogSource                 53         6413193</span><br><span class="line">loginLogSource                 55         6418041</span><br><span class="line">loginLogSource                 41         6422387</span><br></pre></td></tr></table></figure>
-<h3 id="查看消费者组列表-新版本，保存在broker服务器上"><a href="#查看消费者组列表-新版本，保存在broker服务器上" class="headerlink" title="查看消费者组列表(新版本，保存在broker服务器上)"></a>查看消费者组列表(新版本，保存在broker服务器上)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server kafka1.tanwan.com:9092 --list</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">	gameDataRole</span><br><span class="line">	test</span><br><span class="line">	gameReg</span><br><span class="line">	f19b1ee0-cc0f-498c-b512-5543ddeb3235</span><br><span class="line">	c3e1b9d8-b331-4234-a206-dad11a257813</span><br><span class="line">	5d821cab-4d13-432b-aa05-8a34782fde0b</span><br><span class="line">	gameRoleInfo</span><br><span class="line">	kmf-consumer-group--2145004575</span><br><span class="line">	login</span><br><span class="line">	3f141b56-aaa8-46fa-a0ad-ed5b87fd4084</span><br><span class="line">	test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e32</span><br><span class="line">	agentMatch</span><br><span class="line">	connect-elasticsearch-sink</span><br><span class="line">	gameRoleInfoPayList</span><br><span class="line">	payList3</span><br><span class="line">	5962df48-92ec-4988-a6d7-68691baa235f</span><br><span class="line">	loginReg</span><br><span class="line">	test_82cf1c1c-72c5-4e6f-8018-bf52ed0577e3</span><br></pre></td></tr></table></figure>
-<h2 id="5-kafka-run-class"><a href="#5-kafka-run-class" class="headerlink" title="5.kafka-run-class"></a>5.kafka-run-class</h2><h3 id="查询offset的最大值-latest"><a href="#查询offset的最大值-latest" class="headerlink" title="查询offset的最大值(latest)"></a>查询offset的最大值(latest)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list kafka1.tanwan.com:9092 -topic loginLogSource --time -1</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">loginLogSource:0:8190820</span><br><span class="line">loginLogSource:10:8194471</span><br><span class="line">loginLogSource:20:8184116</span><br><span class="line">loginLogSource:40:8192889</span><br></pre></td></tr></table></figure>
-<h3 id="查询offset的最小值（earliest）"><a href="#查询offset的最小值（earliest）" class="headerlink" title="查询offset的最小值（earliest）"></a>查询offset的最小值（earliest）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list kafka1.tanwan.com:9092 -topic loginLogSource --time -2</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">loginLogSource:0:6418677</span><br><span class="line">loginLogSource:10:6421082</span><br><span class="line">loginLogSource:20:6410858</span><br><span class="line">loginLogSource:40:6419693</span><br><span class="line">loginLogSource:30:6412937</span><br><span class="line">loginLogSource:50:6413748</span><br><span class="line">loginLogSource:9:6415801</span><br><span class="line">loginLogSource:59:6418753</span><br></pre></td></tr></table></figure>
-<h3 id="更新Zookeeper中指定Topic所有分区的偏移量-可以指定成-earliest或者latest"><a href="#更新Zookeeper中指定Topic所有分区的偏移量-可以指定成-earliest或者latest" class="headerlink" title="更新Zookeeper中指定Topic所有分区的偏移量(可以指定成 earliest或者latest)"></a>更新Zookeeper中指定Topic所有分区的偏移量(可以指定成 earliest或者latest)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-run-class.sh kafka.tools.UpdateOffsetsInZK earliest config/consumer.properties  loginLogSource</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">updating partition 0 with new offset: 6418677</span><br><span class="line">updating partition 1 with new offset: 6415908</span><br><span class="line">updating partition 2 with new offset: 6411723</span><br><span class="line">updating partition 3 with new offset: 6418196</span><br><span class="line">updating partition 4 with new offset: 6416083</span><br><span class="line">updating partition 5 with new offset: 6411995</span><br><span class="line">updating partition 6 with new offset: 6419059</span><br><span class="line">updating partition 7 with new offset: 6419302</span><br><span class="line">updating partition 8 with new offset: 6417078</span><br><span class="line">updating partition 9 with new offset: 6415801</span><br></pre></td></tr></table></figure>
-
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kafka</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark Streaming</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -258,126 +220,17 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://mojiahe.github.io/mokaful.github.io/2019/07/23/2019-07-23-Kafka基本命令/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/mokaful.github.io/2019/07/25/Hive UDAF函数使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Hive UDAF函数使用
-        
-      </div>
-    </a>
   
   
-    <a href="/mokaful.github.io/2019/07/23/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hexo快速入门</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-kafka-topic"><span class="toc-number">1.</span> <span class="toc-text">1.kafka-topic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建话题"><span class="toc-number">1.1.</span> <span class="toc-text">创建话题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除话题"><span class="toc-number">1.2.</span> <span class="toc-text">删除话题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看topic信息"><span class="toc-number">1.3.</span> <span class="toc-text">查看topic信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-kafka-console-consumer"><span class="toc-number">2.</span> <span class="toc-text">2.kafka-console-consumer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制台消费者"><span class="toc-number">2.1.</span> <span class="toc-text">控制台消费者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-kafka-console-producer"><span class="toc-number">3.</span> <span class="toc-text">3.kafka-console-producer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制台生产者"><span class="toc-number">3.1.</span> <span class="toc-text">控制台生产者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-kafka-consumer-groups"><span class="toc-number">4.</span> <span class="toc-text">4.kafka-consumer-groups</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看某组的offset"><span class="toc-number">4.1.</span> <span class="toc-text">查看某组的offset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重置消费者offset"><span class="toc-number">4.2.</span> <span class="toc-text">重置消费者offset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看消费者组列表-新版本，保存在broker服务器上"><span class="toc-number">4.3.</span> <span class="toc-text">查看消费者组列表(新版本，保存在broker服务器上)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-kafka-run-class"><span class="toc-number">5.</span> <span class="toc-text">5.kafka-run-class</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查询offset的最大值-latest"><span class="toc-number">5.1.</span> <span class="toc-text">查询offset的最大值(latest)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询offset的最小值（earliest）"><span class="toc-number">5.2.</span> <span class="toc-text">查询offset的最小值（earliest）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新Zookeeper中指定Topic所有分区的偏移量-可以指定成-earliest或者latest"><span class="toc-number">5.3.</span> <span class="toc-text">更新Zookeeper中指定Topic所有分区的偏移量(可以指定成 earliest或者latest)</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -409,9 +262,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

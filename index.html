@@ -164,6 +164,146 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2019-07-25-Spark合并小文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/mokaful.github.io/2019/07/25/2019-07-25-Spark合并小文件/">2019-07-25-Spark合并小文件</a>
+    </h1>
+  
+
+        
+        <a href="/mokaful.github.io/2019/07/25/2019-07-25-Spark合并小文件/" class="archive-article-date">
+  	<time datetime="2019-07-25T07:36:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-25</time>
+</a>
+        
+       
+         <!-- 开始添加字数统计-->
+        
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">694字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">3分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h2 id="1-问题背景"><a href="#1-问题背景" class="headerlink" title="1.问题背景"></a>1.问题背景</h2><p>使用streaming每五秒钟往HDFS写文件，会在HDFS上这个表的目录下生成很多的小文件（每次批处理一个partition一个文件），这个时候如果想在HIVE中进行统计,计算的时候,会产生很多个Map,严重影响计算的速度</p>
+<h2 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2.解决方案"></a>2.解决方案</h2><h3 id="2-1-纯写SQL方案"><a href="#2-1-纯写SQL方案" class="headerlink" title="2.1 纯写SQL方案"></a>2.1 纯写SQL方案</h3><ul>
+<li><p>实现说明</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 静态分区方式</span></span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> ods_login_log <span class="keyword">partition</span>(dt=<span class="number">2019070118</span>) <span class="keyword">select</span> uid,user_name,game_id,login_time,server_id,agent_id,site_id,cplaceid,adid,turn,login_agent_id,login_site_id,reg_game_time,reg_time,imei,<span class="keyword">model</span>,devicebrand,systemversion,mnos,ip,sdk_version_code,app_version_code,data_plat <span class="keyword">from</span> ods_login_log <span class="keyword">where</span> dt=<span class="number">2019070118</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">## 动态分区方式</span></span><br><span class="line"><span class="keyword">set</span> hive.exec.dynamic.partition=<span class="literal">true</span>;<span class="keyword">set</span> hive.exec.dynamic.partition.mode=nonstrict;</span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> ods.ods_login_log <span class="keyword">partition</span>(dt=<span class="number">2019070914</span>) <span class="keyword">select</span> * <span class="keyword">from</span> ods.ods_login_log <span class="keyword">where</span> dt=<span class="number">2019070914</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>shell脚本实现</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>/bin/bash</span><br><span class="line">table=$1</span><br><span class="line">echo $table</span><br><span class="line">for p in $(hive -e "show partitions ods.$table;")</span><br><span class="line">do</span><br><span class="line">        echo $p</span><br><span class="line">        echo "-------"</span><br><span class="line">        hive -e "set hive.exec.dynamic.partition=true;set hive.exec.dynamic.partition.mode=nonstrict;insert overwrite table ods.$table partition(dt) select * from ods.$table where $p"</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<pre><code>相当于提前跑MR读取文件进行合并
+</code></pre><ul>
+<li>缺点<br>  每批次跑一次过于频繁，影响实时批处理程序</li>
+</ul>
+<h3 id="2-2-重分区方式"><a href="#2-2-重分区方式" class="headerlink" title="2.2 重分区方式"></a>2.2 重分区方式</h3><ul>
+<li>实现说明<br>创建的DataFrame的时候,cache一下,然后对DataFrame进行重新分区,可以把分区设置为1,可以用reparation,当然也可以用coalesce</li>
+<li>缺点<br>降低了写入的性能,所以数据量不是特别大的时候,还是可以用的,但是如果数据量很大,就需谨慎使用</li>
+</ul>
+<h3 id="2-3-第三方程序"><a href="#2-3-第三方程序" class="headerlink" title="2.3 第三方程序"></a>2.3 第三方程序</h3><blockquote>
+<p>本人为试过，借鉴网上大神的实现</p>
+</blockquote>
+<ul>
+<li>实现说明<br>Hadoop的FileUtil工具类中提供了copyMerge()方法，它专门用来将一个HDFS目录下的所有文件合并成一个文件并输出，其源码如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">copyMerge</span><span class="params">(FileSystem srcFS, Path srcDir, </span></span></span><br><span class="line"><span class="function"><span class="params">                                  FileSystem dstFS, Path dstFile, </span></span></span><br><span class="line"><span class="function"><span class="params">                                  <span class="keyword">boolean</span> deleteSource,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  Configuration conf, String addString)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    dstFile = checkDest(srcDir.getName(), dstFS, dstFile, <span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!srcFS.getFileStatus(srcDir).isDirectory())</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   </span><br><span class="line">    OutputStream out = dstFS.create(dstFile);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      FileStatus contents[] = srcFS.listStatus(srcDir);</span><br><span class="line">      Arrays.sort(contents);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; contents.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (contents[i].isFile()) &#123;</span><br><span class="line">          InputStream in = srcFS.open(contents[i].getPath());</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            IOUtils.copyBytes(in, out, conf, <span class="keyword">false</span>);</span><br><span class="line">            <span class="keyword">if</span> (addString!=<span class="keyword">null</span>)</span><br><span class="line">              out.write(addString.getBytes(<span class="string">"UTF-8"</span>));</span><br><span class="line">                </span><br><span class="line">          &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            in.close();</span><br><span class="line">          &#125; </span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      out.close();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (deleteSource) &#123;</span><br><span class="line">      <span class="keyword">return</span> srcFS.delete(srcDir, <span class="keyword">true</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以写一个简单的程序，通过调用copyMerge()方法合并Hive外部表对应分区的文件，并且按照分区的时间粒度（天、小时等）调度。源数据的文件夹可以通过参数来指定，并且设置deleteSource参数为true，就能在合并完成后删除原来的小文件。需要注意的是，为了避免将当前正在写入的文件也合并进去，调度需要有一点延时</p>
+<ul>
+<li>缺点<br>为了避免将当前正在写入的文件也合并进去，调度需要有一点延时</li>
+</ul>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark Streaming</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/mokaful.github.io/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/mokaful.github.io/2019/07/25/2019-07-25-Spark合并小文件/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hive UDAF函数使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -628,6 +768,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Spark Streaming</a>
               </li>
              
               <li class="article-tag-list-item">
