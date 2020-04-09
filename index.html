@@ -164,6 +164,393 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Flink初步了解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/09/Flink初步了解/">Flink初步了解</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/09/Flink初步了解/" class="archive-article-date">
+  	<time datetime="2020-04-09T09:13:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-09</time>
+</a>
+        
+       
+         <!-- 开始添加字数统计-->
+        
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">392字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">1分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h4 id="1-整体数据流向"><a href="#1-整体数据流向" class="headerlink" title="1.整体数据流向"></a>1.整体数据流向</h4><p>  <code>Source -&gt; Transformation -&gt; Sink</code></p>
+<h5 id="1-1-自带Source类型"><a href="#1-1-自带Source类型" class="headerlink" title="1.1 自带Source类型"></a>1.1 自带Source类型</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">基于集合：有界数据集，更偏向于本地测试用</span><br><span class="line"></span><br><span class="line">基于文件：适合监听文件修改并读取其内容</span><br><span class="line"></span><br><span class="line">基于 Socket：监听主机的 host port，从 Socket 中获取数据</span><br><span class="line"></span><br><span class="line">自定义 addSource：大多数的场景数据都是无界的，会源源不断过来。比如去消费 Kafka 某个 topic 上的数据，这时候就需要用到这个 addSource，可能因为用的比较多的原因吧，Flink 直接提供了 FlinkKafkaConsumer011 等类可供你直接使用。你可以去看看 FlinkKafkaConsumerBase 这个基础类，它是 Flink Kafka 消费的最根本的类。</span><br></pre></td></tr></table></figure>
+<h5 id="1-2-自定义Source"><a href="#1-2-自定义Source" class="headerlink" title="1.2 自定义Source"></a>1.2 自定义Source</h5><ul>
+<li>RichSourceFunction<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">open：准备连接</span><br><span class="line">close：关闭连接</span><br><span class="line">run：获取数据</span><br><span class="line">cancel：停止取数据</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="1-3-自带Source"><a href="#1-3-自带Source" class="headerlink" title="1.3 自带Source"></a>1.3 自带Source</h5> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Kafka、ElasticSearch、Socket、RabbitMQ、JDBC、Cassandra POJO、File、Print 等 Sink</span><br></pre></td></tr></table></figure>
+<h5 id="1-4-自定义Sink"><a href="#1-4-自定义Sink" class="headerlink" title="1.4 自定义Sink"></a>1.4 自定义Sink</h5><ul>
+<li>RichSinkFunction<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">open：打开连接</span><br><span class="line">close：关闭连接</span><br><span class="line">invoke：写入数据</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-Window组成"><a href="#2-Window组成" class="headerlink" title="2.Window组成"></a>2.Window组成</h4><ul>
+<li>Assigner：数据分配方式</li>
+<li>Trigger：触发计算的方式</li>
+<li>Evictor：数据剔除器</li>
+<li>Function：数据计算函数</li>
+</ul>
+<h4 id="3-Watermark核心方法"><a href="#3-Watermark核心方法" class="headerlink" title="3.Watermark核心方法"></a>3.Watermark核心方法</h4><ul>
+<li>checkAndGetNextWatermark：这个⽅方法会 在每次 extractTimestamp() 方法被调⽤后调用，它可以决定是否要⽣生成⼀个新的水印，返回的⽔印只有在不为null并且时间戳要大于先前返回的水印时间戳的时候才会发送出去，如果返回的水印是 null或者返回的水印时间戳⽐之前的小则不会生成新的水印</li>
+<li>extractTimestamp：从数据中提取EventTime</li>
+<li>getCurrentWatermark：获取当前水位线</li>
+</ul>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flink入门</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/09/Flink初步了解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Flink架构认识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/09/Flink架构认识/">Flink架构认识</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/09/Flink架构认识/" class="archive-article-date">
+  	<time datetime="2020-04-09T09:06:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-09</time>
+</a>
+        
+       
+         <!-- 开始添加字数统计-->
+        
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">829字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h1 id="四大核心"><a href="#四大核心" class="headerlink" title="四大核心"></a>四大核心</h1><p><img src="/images/2020/04/09/16ff3b70-7a41-11ea-be0b-d9537b42a236.png" alt="image.png"></p>
+<h1 id="为什么选择-Flink"><a href="#为什么选择-Flink" class="headerlink" title="为什么选择 Flink"></a>为什么选择 Flink</h1><p>Flink 是一个开源的分布式流式处理框架：</p>
+<ol>
+<li>提供准确的结果，甚至在出现无序或者延迟加载的数据的情况下。</li>
+<li>它是状态化的容错的，同时在维护一次完整的的应用状态时，能无缝修复错误。</li>
+<li>大规模运行，在上千个节点运行时有很好的吞吐量和低延迟。</li>
+</ol>
+<ul>
+<li><p>更早的时候，我们讨论了数据集类型（有界 vs 无穷）和运算模型（批处理 vs 流式）的匹配。Flink 的流式计算模型启用了很多功能特性，如状态管理，处理无序数据，灵活的视窗，这些功能对于得出无穷数据集的精确结果是很重要的。</p>
+</li>
+<li><p>Flink 保证状态化计算强一致性。”状态化“意味着应用可以维护随着时间推移已经产生的数据聚合或者，并且 Filnk 的检查点机制在一次失败的事件中一个应用状态的强一致性。<br><img src="/images/2020/04/09/2fb7d0a0-7a41-11ea-be0b-d9537b42a236.jpg" alt="exactly_once_state.jpg"></p>
+</li>
+<li><p>Flink 支持流式计算和带有事件时间语义的视窗。事件时间机制使得那些事件无序到达甚至延迟到达的数据流能够计算出精确的结果。<br><img src="/images/2020/04/09/3c6f9530-7a41-11ea-be0b-d9537b42a236.jpg" alt="out_of_order_stream.jpg"></p>
+</li>
+<li><p>除了提供数据驱动的视窗外，Flink 还支持基于时间，计数，session 等的灵活视窗。视窗能够用灵活的触发条件定制化从而达到对复杂的流传输模式的支持。Flink 的视窗使得模拟真实的创建数据的环境成为可能。<br><img src="/images/2020/04/09/48bfbe50-7a41-11ea-be0b-d9537b42a236.jpg" alt="windows.jpg"></p>
+</li>
+<li><p>Flink 的容错能力是轻量级的，允许系统保持高并发，同时在相同时间内提供强一致性保证。Flink 以零数据丢失的方式从故障中恢复，但没有考虑可靠性和延迟之间的折衷。<br><img src="/images/2020/04/09/4f7c98d0-7a41-11ea-be0b-d9537b42a236.jpg" alt="distributed_snapshots.jpg"></p>
+</li>
+<li><p>Flink 能满足高并发和低延迟（计算大量数据很快）。下图显示了 Apache Flink 与 Apache Storm 在完成流数据清洗的分布式任务的性能对比。<br><img src="/images/2020/04/09/55f4f040-7a41-11ea-be0b-d9537b42a236.jpg" alt="streaming_performance.jpg"></p>
+</li>
+<li><p>Flink 保存点提供了一个状态化的版本机制，使得能以无丢失状态和最短停机时间的方式更新应用或者回退历史数据。<br><img src="/images/2020/04/09/5b580720-7a41-11ea-be0b-d9537b42a236.jpg" alt="savepoints.jpg"></p>
+</li>
+<li><p>Flink 被设计成能用上千个点在大规模集群上运行。除了支持独立集群部署外，Flink 还支持 YARN 和Mesos 方式部署。<br>Flink 的程序内在是并行和分布式的，数据流可以被分区成 stream partitions，operators 被划分为operator subtasks; 这些 subtasks 在不同的机器或容器中分不同的线程独立运行；operator subtasks 的数量在具体的 operator 就是并行计算数，程序不同的 operator 阶段可能有不同的并行数；如下图所示，source operator 的并行数为 2，但最后的 sink operator 为1；<br><img src="/images/2020/04/09/625f7f30-7a41-11ea-be0b-d9537b42a236.jpg" alt="parallel_dataflows.jpg"></p>
+</li>
+<li><p>自己的内存管理；Flink 在 JVM 中提供了自己的内存管理，使其独立于 Java 的默认垃圾收集器。 它通过使用散列，索引，缓存和排序有效地进行内存管理。</p>
+</li>
+<li><p>丰富的库；Flink 拥有丰富的库来进行机器学习，图形处理，关系数据处理等。 由于其架构，很容易执行复杂的事件处理和警报。</p>
+</li>
+</ul>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flink入门</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/09/Flink架构认识/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Flink开始" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/09/Flink开始/">Flink开始</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/09/Flink开始/" class="archive-article-date">
+  	<time datetime="2020-04-09T09:00:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-09</time>
+</a>
+        
+       
+         <!-- 开始添加字数统计-->
+        
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">472字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h1 id="Mac上安装Flink"><a href="#Mac上安装Flink" class="headerlink" title="Mac上安装Flink"></a>Mac上安装Flink</h1><p>1.查找brew内Flink包<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search flink</span><br></pre></td></tr></table></figure></p>
+<p>2.执行安装<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install flink</span><br></pre></td></tr></table></figure></p>
+<p>3.检查安装<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flink --version</span><br></pre></td></tr></table></figure></p>
+<p>4.启动Flink<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/Cellar/apache-flink/1.8.1/libexec/bin/start-cluster.sh</span><br><span class="line"></span><br><span class="line">Starting cluster.</span><br><span class="line">Starting standalonesession daemon on host jiahedeMacBook-Pro.local.</span><br><span class="line">Starting taskexecutor daemon on host jiahedeMacBook-Pro.local.</span><br></pre></td></tr></table></figure></p>
+<p>接着就可以进入 web 页面(<a href="http://localhost:8081/" target="_blank" rel="noopener">http://localhost:8081/</a>) 查看</p>
+<h1 id="本地模式调试WorldCount例子"><a href="#本地模式调试WorldCount例子" class="headerlink" title="本地模式调试WorldCount例子"></a>本地模式调试WorldCount例子</h1><p>监听本地Socket的9999端口的词频统计</p>
+<p>1.代码实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> pers.mockan.flink;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.flink.api.common.functions.FlatMapFunction;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.api.java.tuple.Tuple2;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.datastream.DataStreamSource;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.util.Collector;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SocketTextStreamWordCount</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//参数检查</span></span><br><span class="line">        <span class="keyword">if</span> (args.length != <span class="number">2</span>) &#123;</span><br><span class="line">            System.err.println(<span class="string">"USAGE:\nSocketTextStreamWordCount &lt;hostname&gt; &lt;port&gt;"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        String hostname = args[<span class="number">0</span>];</span><br><span class="line">        Integer port = Integer.parseInt(args[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// set up the streaming execution environment</span></span><br><span class="line">        <span class="keyword">final</span> StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取数据</span></span><br><span class="line">        DataStreamSource&lt;String&gt; stream = env.socketTextStream(hostname, port);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计数</span></span><br><span class="line">        SingleOutputStreamOperator&lt;Tuple2&lt;String, Integer&gt;&gt; sum = stream.flatMap(<span class="keyword">new</span> LineSplitter())</span><br><span class="line">                .keyBy(<span class="number">0</span>)</span><br><span class="line">                .sum(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        sum.print();</span><br><span class="line"></span><br><span class="line">        env.execute(<span class="string">"Java WordCount from SocketTextStream Example"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">LineSplitter</span> <span class="keyword">implements</span> <span class="title">FlatMapFunction</span>&lt;<span class="title">String</span>, <span class="title">Tuple2</span>&lt;<span class="title">String</span>, <span class="title">Integer</span>&gt;&gt; </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatMap</span><span class="params">(String s, Collector&lt;Tuple2&lt;String, Integer&gt;&gt; collector)</span> </span>&#123;</span><br><span class="line">            String[] tokens = s.toLowerCase().split(<span class="string">"\\W+"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (String token: tokens) &#123;</span><br><span class="line">                <span class="keyword">if</span> (token.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    collector.collect(<span class="keyword">new</span> Tuple2&lt;String, Integer&gt;(token, <span class="number">1</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.启动本地端口<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l 9999</span><br></pre></td></tr></table></figure></p>
+<p>3.在nc内发送单词，一个一行<br>4.idea内设置启动类的Program arguments为127.0.0.1 9999，启动</p>
+<h1 id="打包standlone运行"><a href="#打包standlone运行" class="headerlink" title="打包standlone运行"></a>打包standlone运行</h1><p>1.使用maven进行打包<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></p>
+<p>2.使用flink命令提交作业<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flink run -c pers.mockan.flink.SocketTextStreamWordCount demo-1.0-SNAPSHOT.jar 127.0.0.1 9999</span><br><span class="line"></span><br><span class="line">出现如下信息：</span><br><span class="line">Starting execution of program</span><br></pre></td></tr></table></figure></p>
+<p>3.在Flink web ui上查看提交的作业<br>4.在nc内发送单词，一个一行<br>5.查看输出日志<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/Cellar/apache-flink/1.8.1/libexec/log/flink-mokaful-taskexecutor-0-jiahedeMacBook-Pro.local.out</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">(hello,1)</span><br><span class="line">(world,1)</span><br><span class="line">(count,1)</span><br><span class="line">(hello,2)</span><br><span class="line">(world,2)</span><br><span class="line">(count,2)</span><br><span class="line">(hello,3)</span><br><span class="line">(world,3)</span><br><span class="line">(count,3)</span><br></pre></td></tr></table></figure></p>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flink入门</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/09/Flink开始/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-一次Hive-OOM调优经历" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1068,6 +1455,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Flink入门</a>
               </li>
             
             <div class="clearfix"></div>
