@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="Mac上安装Flink1.查找brew内Flink包1brew search flink 2.执行安装1brew install flink 3.检查安装1flink --version 4.启动Flink12345/usr/local/Cellar/apache-flink/1.8.1/libexec/bin/start-cluster.shStarting cluster.Starting s">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-09T09:00:15.659Z">
+<meta property="og:updated_time" content="2020-04-09T09:19:13.588Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flink开始">
 <meta name="twitter:description" content="Mac上安装Flink1.查找brew内Flink包1brew search flink 2.执行安装1brew install flink 3.检查安装1flink --version 4.启动Flink12345/usr/local/Cellar/apache-flink/1.8.1/libexec/bin/start-cluster.shStarting cluster.Starting s">
@@ -228,7 +228,7 @@
 <h1 id="打包standlone运行"><a href="#打包standlone运行" class="headerlink" title="打包standlone运行"></a>打包standlone运行</h1><p>1.使用maven进行打包<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></p>
 <p>2.使用flink命令提交作业<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flink run -c pers.mockan.flink.SocketTextStreamWordCount demo-1.0-SNAPSHOT.jar 127.0.0.1 9999</span><br><span class="line"></span><br><span class="line">出现如下信息：</span><br><span class="line">Starting execution of program</span><br></pre></td></tr></table></figure></p>
 <p>3.在Flink web ui上查看提交的作业<br>4.在nc内发送单词，一个一行<br>5.查看输出日志<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/Cellar/apache-flink/1.8.1/libexec/log/flink-mokaful-taskexecutor-0-jiahedeMacBook-Pro.local.out</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">(hello,1)</span><br><span class="line">(world,1)</span><br><span class="line">(count,1)</span><br><span class="line">(hello,2)</span><br><span class="line">(world,2)</span><br><span class="line">(count,2)</span><br><span class="line">(hello,3)</span><br><span class="line">(world,3)</span><br><span class="line">(count,3)</span><br></pre></td></tr></table></figure></p>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
   
 
     </div>
@@ -501,6 +501,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Flink入门</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">随便捣鼓</a>
               </li>
             
             <div class="clearfix"></div>
