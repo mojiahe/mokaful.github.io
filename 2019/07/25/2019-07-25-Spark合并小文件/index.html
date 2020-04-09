@@ -224,7 +224,7 @@
 <li><p>shell脚本实现</p>
 </li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>/bin/bash</span><br><span class="line">table=$1</span><br><span class="line">echo $table</span><br><span class="line">for p in $(hive -e "show partitions ods.$table;")</span><br><span class="line">do</span><br><span class="line">        echo $p</span><br><span class="line">        echo "-------"</span><br><span class="line">        hive -e "set hive.exec.dynamic.partition=true;set hive.exec.dynamic.partition.mode=nonstrict;insert overwrite table ods.$table partition(dt) select * from ods.$table where $p"</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">/bin/bash</span></span><br><span class="line">table=$1</span><br><span class="line">echo $table</span><br><span class="line">for p in $(hive -e "show partitions ods.$table;")</span><br><span class="line">do</span><br><span class="line">        echo $p</span><br><span class="line">        echo "-------"</span><br><span class="line">        hive -e "set hive.exec.dynamic.partition=true;set hive.exec.dynamic.partition.mode=nonstrict;insert overwrite table ods.$table partition(dt) select * from ods.$table where $p"</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <pre><code>相当于提前跑MR读取文件进行合并
 </code></pre><ul>
 <li>缺点<br>  每批次跑一次过于频繁，影响实时批处理程序</li>
@@ -495,15 +495,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark Streaming</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
               </li>
             
             <div class="clearfix"></div>
