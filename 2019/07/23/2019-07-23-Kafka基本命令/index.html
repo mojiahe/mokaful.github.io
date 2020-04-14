@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://blog.mokaful.fun">
+  <link rel="dns-prefetch" href="https://www.mokaful.fun">
   <title>Kafka基本命令 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1.kafka-topic创建话题1bin/kafka-topics.sh --create --topic test --replication-factor 1 --partitions 3 --zookeeper localhost:2181 删除话题1bin/kafka-topics.sh --zookeeper emr-header-1:2181 --delete --topic flu">
 <meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka基本命令">
-<meta property="og:url" content="https://blog.mokaful.fun/2019/07/23/2019-07-23-Kafka基本命令/index.html">
+<meta property="og:url" content="https://www.mokaful.fun/2019/07/23/2019-07-23-Kafka基本命令/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="1.kafka-topic创建话题1bin/kafka-topics.sh --create --topic test --replication-factor 1 --partitions 3 --zookeeper localhost:2181 删除话题1bin/kafka-topics.sh --zookeeper emr-header-1:2181 --delete --topic flu">
 <meta property="og:locale" content="default">
@@ -227,7 +227,7 @@
 <h2 id="5-kafka-run-class"><a href="#5-kafka-run-class" class="headerlink" title="5.kafka-run-class"></a>5.kafka-run-class</h2><h3 id="查询offset的最大值-latest"><a href="#查询offset的最大值-latest" class="headerlink" title="查询offset的最大值(latest)"></a>查询offset的最大值(latest)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list kafka1.tanwan.com:9092 -topic loginLogSource --time -1</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">loginLogSource:0:8190820</span><br><span class="line">loginLogSource:10:8194471</span><br><span class="line">loginLogSource:20:8184116</span><br><span class="line">loginLogSource:40:8192889</span><br></pre></td></tr></table></figure>
 <h3 id="查询offset的最小值（earliest）"><a href="#查询offset的最小值（earliest）" class="headerlink" title="查询offset的最小值（earliest）"></a>查询offset的最小值（earliest）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list kafka1.tanwan.com:9092 -topic loginLogSource --time -2</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">loginLogSource:0:6418677</span><br><span class="line">loginLogSource:10:6421082</span><br><span class="line">loginLogSource:20:6410858</span><br><span class="line">loginLogSource:40:6419693</span><br><span class="line">loginLogSource:30:6412937</span><br><span class="line">loginLogSource:50:6413748</span><br><span class="line">loginLogSource:9:6415801</span><br><span class="line">loginLogSource:59:6418753</span><br></pre></td></tr></table></figure>
 <h3 id="更新Zookeeper中指定Topic所有分区的偏移量-可以指定成-earliest或者latest"><a href="#更新Zookeeper中指定Topic所有分区的偏移量-可以指定成-earliest或者latest" class="headerlink" title="更新Zookeeper中指定Topic所有分区的偏移量(可以指定成 earliest或者latest)"></a>更新Zookeeper中指定Topic所有分区的偏移量(可以指定成 earliest或者latest)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-run-class.sh kafka.tools.UpdateOffsetsInZK earliest config/consumer.properties  loginLogSource</span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">updating partition 0 with new offset: 6418677</span><br><span class="line">updating partition 1 with new offset: 6415908</span><br><span class="line">updating partition 2 with new offset: 6411723</span><br><span class="line">updating partition 3 with new offset: 6418196</span><br><span class="line">updating partition 4 with new offset: 6416083</span><br><span class="line">updating partition 5 with new offset: 6411995</span><br><span class="line">updating partition 6 with new offset: 6419059</span><br><span class="line">updating partition 7 with new offset: 6419302</span><br><span class="line">updating partition 8 with new offset: 6417078</span><br><span class="line">updating partition 9 with new offset: 6415801</span><br></pre></td></tr></table></figure>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
   
 
     </div>
@@ -306,7 +306,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://blog.mokaful.fun/2019/07/23/2019-07-23-Kafka基本命令/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2019/07/23/2019-07-23-Kafka基本命令/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -479,10 +479,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark</a>
               </li>
              
@@ -491,11 +487,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,7 +495,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">随便捣鼓</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
               </li>
             
             <div class="clearfix"></div>

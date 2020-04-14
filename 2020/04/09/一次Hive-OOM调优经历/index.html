@@ -5,23 +5,23 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://blog.mokaful.fun">
+  <link rel="dns-prefetch" href="https://www.mokaful.fun">
   <title>一次Hive OOM调优经历 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="需求背景某天，在进行使用Hive做漏斗的离线数据计算，ETL过程的第二层在跑数过程中，出现了Reduce阶段的OOM。这下子赚大了，又触发一个隐藏BOSS。 OOM问题分析观察现象 Hive跑数过程中出现OOM，要区分出是哪个阶段的OOM，一般有：提交阶段、Map阶段、Reduce阶段  遇到问题，莫慌，先看一波日志压压惊。 几经波折，终于在yarn的history web ui上找到了我们运行失">
 <meta name="keywords" content="Hive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一次Hive OOM调优经历">
-<meta property="og:url" content="https://blog.mokaful.fun/2020/04/09/一次Hive-OOM调优经历/index.html">
+<meta property="og:url" content="https://www.mokaful.fun/2020/04/09/一次Hive-OOM调优经历/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="需求背景某天，在进行使用Hive做漏斗的离线数据计算，ETL过程的第二层在跑数过程中，出现了Reduce阶段的OOM。这下子赚大了，又触发一个隐藏BOSS。 OOM问题分析观察现象 Hive跑数过程中出现OOM，要区分出是哪个阶段的OOM，一般有：提交阶段、Map阶段、Reduce阶段  遇到问题，莫慌，先看一波日志压压惊。 几经波折，终于在yarn的history web ui上找到了我们运行失">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/63f5ac60-7a3d-11ea-be0b-d9537b42a236.png">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/63f5ac60-7a3d-11ea-be0b-d9537b42a236.png">
 <meta property="og:updated_time" content="2020-04-09T08:51:36.646Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一次Hive OOM调优经历">
 <meta name="twitter:description" content="需求背景某天，在进行使用Hive做漏斗的离线数据计算，ETL过程的第二层在跑数过程中，出现了Reduce阶段的OOM。这下子赚大了，又触发一个隐藏BOSS。 OOM问题分析观察现象 Hive跑数过程中出现OOM，要区分出是哪个阶段的OOM，一般有：提交阶段、Map阶段、Reduce阶段  遇到问题，莫慌，先看一波日志压压惊。 几经波折，终于在yarn的history web ui上找到了我们运行失">
-<meta name="twitter:image" content="https://blog.mokaful.fun/images/2020/04/09/63f5ac60-7a3d-11ea-be0b-d9537b42a236.png">
+<meta name="twitter:image" content="https://www.mokaful.fun/images/2020/04/09/63f5ac60-7a3d-11ea-be0b-d9537b42a236.png">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -256,7 +256,7 @@
 </li>
 </ul>
 <h1 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h1><p>回顾了一下reduce的个数设定规则，在看了一下自己的sql，发现sql中使用了<code>order by</code>，找中问题所在，还是mr的理解不够深啊！</p>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
   
 
     </div>
@@ -335,7 +335,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://blog.mokaful.fun/2020/04/09/一次Hive-OOM调优经历/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/04/09/一次Hive-OOM调优经历/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -508,10 +508,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark</a>
               </li>
              
@@ -520,11 +516,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,7 +524,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">随便捣鼓</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
               </li>
             
             <div class="clearfix"></div>

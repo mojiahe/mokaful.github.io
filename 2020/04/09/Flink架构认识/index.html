@@ -5,30 +5,30 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://blog.mokaful.fun">
+  <link rel="dns-prefetch" href="https://www.mokaful.fun">
   <title>Flink架构认识 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="四大核心 为什么选择 FlinkFlink 是一个开源的分布式流式处理框架：  提供准确的结果，甚至在出现无序或者延迟加载的数据的情况下。 它是状态化的容错的，同时在维护一次完整的的应用状态时，能无缝修复错误。 大规模运行，在上千个节点运行时有很好的吞吐量和低延迟。   更早的时候，我们讨论了数据集类型（有界 vs 无穷）和运算模型（批处理 vs 流式）的匹配。Flink 的流式计算模型启用了很多">
 <meta name="keywords" content="Flink入门">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flink架构认识">
-<meta property="og:url" content="https://blog.mokaful.fun/2020/04/09/Flink架构认识/index.html">
+<meta property="og:url" content="https://www.mokaful.fun/2020/04/09/Flink架构认识/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="四大核心 为什么选择 FlinkFlink 是一个开源的分布式流式处理框架：  提供准确的结果，甚至在出现无序或者延迟加载的数据的情况下。 它是状态化的容错的，同时在维护一次完整的的应用状态时，能无缝修复错误。 大规模运行，在上千个节点运行时有很好的吞吐量和低延迟。   更早的时候，我们讨论了数据集类型（有界 vs 无穷）和运算模型（批处理 vs 流式）的匹配。Flink 的流式计算模型启用了很多">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/16ff3b70-7a41-11ea-be0b-d9537b42a236.png">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/2fb7d0a0-7a41-11ea-be0b-d9537b42a236.jpg">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/3c6f9530-7a41-11ea-be0b-d9537b42a236.jpg">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/48bfbe50-7a41-11ea-be0b-d9537b42a236.jpg">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/4f7c98d0-7a41-11ea-be0b-d9537b42a236.jpg">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/55f4f040-7a41-11ea-be0b-d9537b42a236.jpg">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/5b580720-7a41-11ea-be0b-d9537b42a236.jpg">
-<meta property="og:image" content="https://blog.mokaful.fun/images/2020/04/09/625f7f30-7a41-11ea-be0b-d9537b42a236.jpg">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/16ff3b70-7a41-11ea-be0b-d9537b42a236.png">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/2fb7d0a0-7a41-11ea-be0b-d9537b42a236.jpg">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/3c6f9530-7a41-11ea-be0b-d9537b42a236.jpg">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/48bfbe50-7a41-11ea-be0b-d9537b42a236.jpg">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/4f7c98d0-7a41-11ea-be0b-d9537b42a236.jpg">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/55f4f040-7a41-11ea-be0b-d9537b42a236.jpg">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/5b580720-7a41-11ea-be0b-d9537b42a236.jpg">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/04/09/625f7f30-7a41-11ea-be0b-d9537b42a236.jpg">
 <meta property="og:updated_time" content="2020-04-09T09:06:39.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flink架构认识">
 <meta name="twitter:description" content="四大核心 为什么选择 FlinkFlink 是一个开源的分布式流式处理框架：  提供准确的结果，甚至在出现无序或者延迟加载的数据的情况下。 它是状态化的容错的，同时在维护一次完整的的应用状态时，能无缝修复错误。 大规模运行，在上千个节点运行时有很好的吞吐量和低延迟。   更早的时候，我们讨论了数据集类型（有界 vs 无穷）和运算模型（批处理 vs 流式）的匹配。Flink 的流式计算模型启用了很多">
-<meta name="twitter:image" content="https://blog.mokaful.fun/images/2020/04/09/16ff3b70-7a41-11ea-be0b-d9537b42a236.png">
+<meta name="twitter:image" content="https://www.mokaful.fun/images/2020/04/09/16ff3b70-7a41-11ea-be0b-d9537b42a236.png">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -254,7 +254,7 @@
 <li><p>丰富的库；Flink 拥有丰富的库来进行机器学习，图形处理，关系数据处理等。 由于其架构，很容易执行复杂的事件处理和警报。</p>
 </li>
 </ul>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
   
 
     </div>
@@ -333,7 +333,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://blog.mokaful.fun/2020/04/09/Flink架构认识/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/04/09/Flink架构认识/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -506,10 +506,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark</a>
               </li>
              
@@ -518,11 +514,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -530,7 +522,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">随便捣鼓</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
               </li>
             
             <div class="clearfix"></div>

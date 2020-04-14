@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://blog.mokaful.fun">
+  <link rel="dns-prefetch" href="https://www.mokaful.fun">
   <title>Flink Broadcast State使用 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="业务场景 客户端上报的用户行为日志只包含了事件 Id，可是下游处理数据需要事件名字 事件监控的场景中，处理的是设备上报的一条条事件信息，告警规则的阈值需要动态调整，需要根据配置动态更新  解决方案 预加载维表到内存，并定时更新 适用于维表数据量较小，且维表变更频率较低的场景 维表信息不能过大；维表数据更新不及时   实时读取第三方存储媒介，如MySQL、HBase，增加热查询Cache 支持大维度">
 <meta name="keywords" content="Flink入门">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flink Broadcast State使用">
-<meta property="og:url" content="https://blog.mokaful.fun/2020/04/14/Flink-Broadcast-State使用/index.html">
+<meta property="og:url" content="https://www.mokaful.fun/2020/04/14/Flink-Broadcast-State使用/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="业务场景 客户端上报的用户行为日志只包含了事件 Id，可是下游处理数据需要事件名字 事件监控的场景中，处理的是设备上报的一条条事件信息，告警规则的阈值需要动态调整，需要根据配置动态更新  解决方案 预加载维表到内存，并定时更新 适用于维表数据量较小，且维表变更频率较低的场景 维表信息不能过大；维表数据更新不及时   实时读取第三方存储媒介，如MySQL、HBase，增加热查询Cache 支持大维度">
 <meta property="og:locale" content="default">
@@ -322,7 +322,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://blog.mokaful.fun/2020/04/14/Flink-Broadcast-State使用/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/04/14/Flink-Broadcast-State使用/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -486,10 +486,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark</a>
               </li>
              
@@ -498,11 +494,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -510,7 +502,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">随便捣鼓</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
               </li>
             
             <div class="clearfix"></div>

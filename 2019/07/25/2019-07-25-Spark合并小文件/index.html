@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://blog.mokaful.fun">
+  <link rel="dns-prefetch" href="https://www.mokaful.fun">
   <title>Spark Streaming合并小文件 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1.问题背景使用streaming每五秒钟往HDFS写文件，会在HDFS上这个表的目录下生成很多的小文件（每次批处理一个partition一个文件），这个时候如果想在HIVE中进行统计,计算的时候,会产生很多个Map,严重影响计算的速度 2.解决方案2.1 纯写SQL方案 实现说明 123456## 静态分区方式insert overwrite table ods_login_log partit">
 <meta name="keywords" content="Spark,Spark Streaming">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spark Streaming合并小文件">
-<meta property="og:url" content="https://blog.mokaful.fun/2019/07/25/2019-07-25-Spark合并小文件/index.html">
+<meta property="og:url" content="https://www.mokaful.fun/2019/07/25/2019-07-25-Spark合并小文件/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="1.问题背景使用streaming每五秒钟往HDFS写文件，会在HDFS上这个表的目录下生成很多的小文件（每次批处理一个partition一个文件），这个时候如果想在HIVE中进行统计,计算的时候,会产生很多个Map,严重影响计算的速度 2.解决方案2.1 纯写SQL方案 实现说明 123456## 静态分区方式insert overwrite table ods_login_log partit">
 <meta property="og:locale" content="default">
@@ -244,7 +244,7 @@
 <ul>
 <li>缺点<br>为了避免将当前正在写入的文件也合并进去，调度需要有一点延时</li>
 </ul>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
   
 
     </div>
@@ -327,7 +327,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://blog.mokaful.fun/2019/07/25/2019-07-25-Spark合并小文件/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2019/07/25/2019-07-25-Spark合并小文件/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -500,10 +500,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark</a>
               </li>
              
@@ -512,11 +508,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,7 +516,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">随便捣鼓</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hive</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
               </li>
             
             <div class="clearfix"></div>
