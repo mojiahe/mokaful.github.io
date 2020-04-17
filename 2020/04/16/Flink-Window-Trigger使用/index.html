@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="Window Trigger介绍 介绍Window Trigger是什么，以及作用  Window回顾在学习到Flink Window的时候，从官方Window文档可以知道Window可以分为两种：Keyed Windows和Non-Keyed Windows，他们的使用如下：123456789101112131415161718192021Keyed Windowsstream       .k">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-16T04:47:52.287Z">
+<meta property="og:updated_time" content="2020-04-17T09:26:16.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flink Window Trigger使用">
 <meta name="twitter:description" content="Window Trigger介绍 介绍Window Trigger是什么，以及作用  Window回顾在学习到Flink Window的时候，从官方Window文档可以知道Window可以分为两种：Keyed Windows和Non-Keyed Windows，他们的使用如下：123456789101112131415161718192021Keyed Windowsstream       .k">
@@ -242,7 +242,7 @@
 <li>PURE：清除窗口的元素</li>
 <li>FIRE_AND_PURE：触发计算和清除窗口元素</li>
 </ul>
-<p>通过参考内置的<code>EventTimeTrigger</code>类可以看出，窗口触发计算的逻辑就是由onElement/onEventTime/onProcessingTime几个重要方法内、根据具体的业务逻辑来控制返回<code>TriggerResult</code>以达到创建相应的效果。</p>
+<p>通过参考内置的<code>EventTimeTrigger</code>类可以看出，窗口触发计算的逻辑就是由onElement/onEventTime/onProcessingTime几个重要方法内、根据具体的业务逻辑来控制返回<code>TriggerResult</code>以达到相应的窗口控制。</p>
 <h2 id="内置Trigger"><a href="#内置Trigger" class="headerlink" title="内置Trigger"></a>内置Trigger</h2><p>Flink内部内置了很多<code>Trigger</code>，类型以及作用如下：</p>
 <ul>
 <li>EventTimeTrigger：EventTime超过Watermark时触发计算</li>
