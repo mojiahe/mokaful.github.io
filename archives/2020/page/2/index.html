@@ -6,26 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.mokaful.fun">
-  <title>一文理解Hive的Join们 | Mokaful&#39;s Blog</title>
+  <title>Archives: 2020 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言Hive在后续的版本将会采用CBO（基于成本的优化器）对查询进行优化，而Join是其中的主要部分。 了解Join的最佳实践和用例是调整Hive性能的关键因素之一。本文将解释各种Join，并使用解释计划输出来对比其差异。  注意：以下所有测试均基于Hive 0.13。  1. Shuffle Join(Common Join) 又称reduce side join  工作原理Shuffle Jo">
-<meta name="keywords" content="Hive">
-<meta property="og:type" content="article">
-<meta property="og:title" content="一文理解Hive的Join们">
-<meta property="og:url" content="https://www.mokaful.fun/2020/05/19/一文理解Hive的Join们/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Mokaful&#39;s Blog">
+<meta property="og:url" content="https://www.mokaful.fun/archives/2020/page/2/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
-<meta property="og:description" content="前言Hive在后续的版本将会采用CBO（基于成本的优化器）对查询进行优化，而Join是其中的主要部分。 了解Join的最佳实践和用例是调整Hive性能的关键因素之一。本文将解释各种Join，并使用解释计划输出来对比其差异。  注意：以下所有测试均基于Hive 0.13。  1. Shuffle Join(Common Join) 又称reduce side join  工作原理Shuffle Jo">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.mokaful.fun/images/2020/05/19/c3645dd0-99b0-11ea-b3df-2fb8de1fd9ea.png">
-<meta property="og:image" content="https://www.mokaful.fun/images/2020/05/19/e3e35170-99b4-11ea-b3df-2fb8de1fd9ea.png">
-<meta property="og:image" content="https://www.mokaful.fun/images/2020/05/19/a1e6dd90-99ba-11ea-b3df-2fb8de1fd9ea.png">
-<meta property="og:image" content="https://www.mokaful.fun/images/2020/05/19/87ff80d0-99c4-11ea-b3df-2fb8de1fd9ea.png">
-<meta property="og:image" content="https://www.mokaful.fun/images/2020/05/19/986bcfa0-99c9-11ea-b3df-2fb8de1fd9ea.png">
-<meta property="og:updated_time" content="2020-05-19T12:52:25.222Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一文理解Hive的Join们">
-<meta name="twitter:description" content="前言Hive在后续的版本将会采用CBO（基于成本的优化器）对查询进行优化，而Join是其中的主要部分。 了解Join的最佳实践和用例是调整Hive性能的关键因素之一。本文将解释各种Join，并使用解释计划输出来对比其差异。  注意：以下所有测试均基于Hive 0.13。  1. Shuffle Join(Common Join) 又称reduce side join  工作原理Shuffle Jo">
-<meta name="twitter:image" content="https://www.mokaful.fun/images/2020/05/19/c3645dd0-99b0-11ea-b3df-2fb8de1fd9ea.png">
+<meta name="twitter:title" content="Mokaful&#39;s Blog">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -173,202 +162,48 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-一文理解Hive的Join们" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      一文理解Hive的Join们
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/04/09/一次线上CPU突然飙升的排查经历/" class="archive-article-date">
+  	<time datetime="2020-04-09T08:21:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-09</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/04/09/一次线上CPU突然飙升的排查经历/">一次线上CPU突然飙升的排查经历</a>
     </h1>
   
 
-        
-        <a href="/2020/05/19/一文理解Hive的Join们/" class="archive-article-date">
-  	<time datetime="2020-05-19T09:30:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
-        
-       
-            <span class="archive-article-date">
-              阅读量 <span id="busuanzi_value_page_pv"></span>
-            </span>
-        
-         <!-- 开始添加字数统计-->
-        
-          <div class="archive-article-date">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3.6k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">17分</span>
-      </span>
-    </span>
-</div>
+        <div class="article-info info-on-right">
           
-        <!-- 添加完成 -->
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-  
-    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Hive在后续的版本将会采用CBO（基于成本的优化器）对查询进行优化，而Join是其中的主要部分。 了解Join的最佳实践和用例是调整Hive性能的关键因素之一。本文将解释各种Join，并使用解释计划输出来对比其差异。</p>
-<blockquote>
-<p>注意：以下所有测试均基于Hive 0.13。</p>
-</blockquote>
-<h1 id="1-Shuffle-Join-Common-Join"><a href="#1-Shuffle-Join-Common-Join" class="headerlink" title="1. Shuffle Join(Common Join)"></a>1. Shuffle Join(Common Join)</h1><blockquote>
-<p>又称reduce side join</p>
-</blockquote>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p><code>Shuffle Join</code>是Hive默认选择的Join方式，它包括一个map阶段和一个reduce阶段，总体的过程如下：</p>
-<ul>
-<li>Mapper:读取原表并将Join的字段作为key、Select的字段作为value组成键值对输出到中间文件中</li>
-<li>Shuffle:对中间数据进行排序和合并</li>
-<li>Reducer:根据key值完成Join连接<br><img src="/images/2020/05/19/c3645dd0-99b0-11ea-b3df-2fb8de1fd9ea.png" alt="shuffle join.png"></li>
-</ul>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
-<li>可以对任意大小的多表进行关联</li>
-<li>特别是在无法使用其他联接类型时，例如，full outer join。</li>
-</ul>
-<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
-<li>shuffle阶段需要经过耗费资源的数据传输</li>
-</ul>
-<h2 id="解释计划"><a href="#解释计划" class="headerlink" title="解释计划"></a>解释计划</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> explain select a.* from passwords a, passwords2 b <span class="built_in">where</span> a.col0=b.col1;</span></span><br><span class="line">OK</span><br><span class="line">STAGE DEPENDENCIES:</span><br><span class="line">  Stage-5 is a root stage , consists of Stage-1</span><br><span class="line">  Stage-1</span><br><span class="line">  Stage-0 is a root stage</span><br><span class="line"></span><br><span class="line">STAGE PLANS:</span><br><span class="line">  Stage: Stage-5</span><br><span class="line">    Conditional Operator</span><br><span class="line"></span><br><span class="line">  Stage: Stage-1</span><br><span class="line">    Map Reduce</span><br><span class="line">      Map Operator Tree:</span><br><span class="line">          TableScan</span><br><span class="line">            alias: b</span><br><span class="line">            Statistics: Num rows: 9961472 Data size: 477102080 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Reduce Output Operator</span><br><span class="line">              key expressions: col1 (type: string)</span><br><span class="line">              sort order: +</span><br><span class="line">              Map-reduce partition columns: col1 (type: string)</span><br><span class="line">              Statistics: Num rows: 9961472 Data size: 477102080 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">              value expressions: col1 (type: string)</span><br><span class="line">          TableScan</span><br><span class="line">            alias: a</span><br><span class="line">            Statistics: Num rows: 9963904 Data size: 477218560 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Reduce Output Operator</span><br><span class="line">              key expressions: col0 (type: string)</span><br><span class="line">              sort order: +</span><br><span class="line">              Map-reduce partition columns: col0 (type: string)</span><br><span class="line">              Statistics: Num rows: 9963904 Data size: 477218560 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">              value expressions: col0 (type: string), col1 (type: string), col2 (type: string), col3 (type: string), col4 (type: string), col5 (type: string), col6 (type: string)</span><br><span class="line">      Reduce Operator Tree:</span><br><span class="line">        Join Operator</span><br><span class="line">          condition map:</span><br><span class="line">               Inner Join 0 to 1</span><br><span class="line">          condition expressions:</span><br><span class="line">            0 &#123;VALUE._col0&#125; &#123;VALUE._col1&#125; &#123;VALUE._col2&#125; &#123;VALUE._col3&#125; &#123;VALUE._col4&#125; &#123;VALUE._col5&#125; &#123;VALUE._col6&#125;</span><br><span class="line">            1 &#123;VALUE._col1&#125;</span><br><span class="line">          outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6, _col10</span><br><span class="line">          Statistics: Num rows: 10960295 Data size: 524940416 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">          Filter Operator</span><br><span class="line">            predicate: (_col0 = _col10) (type: boolean)</span><br><span class="line">            Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Select Operator</span><br><span class="line">              expressions: _col0 (type: string), _col1 (type: string), _col2 (type: string), _col3 (type: string), _col4 (type: string), _col5 (type: string), _col6 (type: string)</span><br><span class="line">              outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6</span><br><span class="line">              Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">              File Output Operator</span><br><span class="line">                compressed: false</span><br><span class="line">                Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">                table:</span><br><span class="line">                    input format: org.apache.hadoop.mapred.TextInputFormat</span><br><span class="line">                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat</span><br><span class="line">                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe</span><br><span class="line"></span><br><span class="line">  Stage: Stage-0</span><br><span class="line">    Fetch Operator</span><br><span class="line">      limit: -1</span><br><span class="line"></span><br><span class="line">Time taken: 1.707 seconds, Fetched: 58 row(s)</span><br></pre></td></tr></table></figure>
-<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><ul>
-<li>由于Join发生在reduce端，小表会被加载到内存，所以大表放在最右边作为流表，这样可以有效减少OOM的几率</li>
-<li>也可以使用hint “STREAMTABLE”关键字进行手动标识流表<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="comment">/*+ STREAMTABLE(a) */</span> a.* <span class="keyword">from</span> passwords a, passwords2 b, passwords3 c <span class="keyword">where</span> a.col0=b.col0 <span class="keyword">and</span> b.col0=c.col0;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="2-Map-Join-Broardcast-Join"><a href="#2-Map-Join-Broardcast-Join" class="headerlink" title="2.Map Join(Broardcast Join)"></a>2.Map Join(Broardcast Join)</h1><h2 id="工作原理-1"><a href="#工作原理-1" class="headerlink" title="工作原理"></a>工作原理</h2><p>在进行多表关联的时候，如果有一个或多个表是足够小到可以加载到内存的话，那么就可以直接在mapper阶段扫描大表的数据来和内存中的小表数据进行关联。这样就可以省掉shuffle阶段和reduce阶段。<br><img src="/images/2020/05/19/e3e35170-99b4-11ea-b3df-2fb8de1fd9ea.png" alt="map join.png"><br>具体流程是：</p>
-<ol>
-<li>启动一个local task，将小表数据加载到内存中的hashtable</li>
-<li>将内存中hashtable经过压缩，然后保存到分布式cahche中</li>
-<li>大表的mapper启动，直接从分布式cache中根据key读取小表数据完成关联、输出</li>
-</ol>
-<h2 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
-<li>小表（维表）连接大表（事实表）</li>
-</ul>
-<h2 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h2><ul>
-<li>要求至少一个是符合小表要求</li>
-<li>对于Right/Full outer join时无法使用</li>
-</ul>
-<h2 id="解释计划-1"><a href="#解释计划-1" class="headerlink" title="解释计划"></a>解释计划</h2><p>passwords3是小表，而passwords是大表<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> explain select a.* from passwords a,passwords3 b <span class="built_in">where</span> a.col0=b.col0;</span></span><br><span class="line">OK</span><br><span class="line">STAGE DEPENDENCIES:</span><br><span class="line">  Stage-4 is a root stage</span><br><span class="line">  Stage-3 depends on stages: Stage-4</span><br><span class="line">  Stage-0 is a root stage</span><br><span class="line"></span><br><span class="line">STAGE PLANS:</span><br><span class="line">  Stage: Stage-4</span><br><span class="line">    Map Reduce Local Work</span><br><span class="line">      Alias -&gt; Map Local Tables:</span><br><span class="line">        b </span><br><span class="line">          Fetch Operator</span><br><span class="line">            limit: -1</span><br><span class="line">      Alias -&gt; Map Local Operator Tree:</span><br><span class="line">        b </span><br><span class="line">          TableScan</span><br><span class="line">            alias: b</span><br><span class="line">            Statistics: Num rows: 1 Data size: 31 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            HashTable Sink Operator</span><br><span class="line">              condition expressions:</span><br><span class="line">                0 &#123;col0&#125; &#123;col1&#125; &#123;col2&#125; &#123;col3&#125; &#123;col4&#125; &#123;col5&#125; &#123;col6&#125;</span><br><span class="line">                1 &#123;col0&#125;</span><br><span class="line">              keys:</span><br><span class="line">                0 col0 (type: string)</span><br><span class="line">                1 col0 (type: string)</span><br><span class="line"></span><br><span class="line">  Stage: Stage-3</span><br><span class="line">    Map Reduce</span><br><span class="line">      Map Operator Tree:</span><br><span class="line">          TableScan</span><br><span class="line">            alias: a</span><br><span class="line">            Statistics: Num rows: 9963904 Data size: 477218560 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Map Join Operator</span><br><span class="line">              condition map:</span><br><span class="line">                   Inner Join 0 to 1</span><br><span class="line">              condition expressions:</span><br><span class="line">                0 &#123;col0&#125; &#123;col1&#125; &#123;col2&#125; &#123;col3&#125; &#123;col4&#125; &#123;col5&#125; &#123;col6&#125;</span><br><span class="line">                1 &#123;col0&#125;</span><br><span class="line">              keys:</span><br><span class="line">                0 col0 (type: string)</span><br><span class="line">                1 col0 (type: string)</span><br><span class="line">              outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6, _col9</span><br><span class="line">              Statistics: Num rows: 10960295 Data size: 524940416 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">              Filter Operator</span><br><span class="line">                predicate: (_col0 = _col9) (type: boolean)</span><br><span class="line">                Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">                Select Operator</span><br><span class="line">                  expressions: _col0 (type: string), _col1 (type: string), _col2 (type: string), _col3 (type: string), _col4 (type: string), _col5 (type: string), _col6 (type: string)</span><br><span class="line">                  outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6</span><br><span class="line">                  Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">                  File Output Operator</span><br><span class="line">                    compressed: false</span><br><span class="line">                    Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">                    table:</span><br><span class="line">                        input format: org.apache.hadoop.mapred.TextInputFormat</span><br><span class="line">                        output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat</span><br><span class="line">                        serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe</span><br><span class="line">      Local Work:</span><br><span class="line">        Map Reduce Local Work</span><br><span class="line"></span><br><span class="line">  Stage: Stage-0</span><br><span class="line">    Fetch Operator</span><br><span class="line">      limit: -1</span><br><span class="line"></span><br><span class="line">Time taken: 0.1 seconds, Fetched: 63 row(s)</span><br></pre></td></tr></table></figure></p>
-<h2 id="注意点-1"><a href="#注意点-1" class="headerlink" title="注意点"></a>注意点</h2><ul>
-<li>可以开启配置，使shuffle/common join自动转化为map join<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">三个参数：</span><br><span class="line">set hive.auto.convert.join=true;</span><br><span class="line">(该参数为true时，Hive自动对左边的表统计量，如果是小表就加入内存，即对小表使用Map join)</span><br><span class="line"></span><br><span class="line">set hive.mapjoin.smalltable.filesize=25000000;</span><br><span class="line">（默认值：25MB；大表小表判断的阈值，如果表的大小小于该值则会被加载到内存中运行）</span><br><span class="line"></span><br><span class="line">set hive.auto.convert.join.noconditionaltask=true;</span><br><span class="line">（默认值：true；将普通的join转化为普通的mapjoin时，是否将多个mapjoin转化为一个mapjoin）</span><br><span class="line"></span><br><span class="line">set hive.auto.convert.join.noconditionaltask.size=10000000;</span><br><span class="line">（将多个mapjoin转化为一个mapjoin时，其表的最大值）</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>从Hive 0.11开始，<code>hive.auto.convert.join=true</code>是默认开启的，你也可以手动关闭它；</p>
-<p>当<code>hive.auto.convert.join.noconditionaltask = true</code>时，如果小表预估的大小小于<code>hive.auto.convert.join.noconditionaltask.size</code>（默认10MB），则common join可以自动转换为map join。</p>
-<p>从上面的SQL计划输出中，我们可以根据统计信息估算出“表b的数据大小= 31”。<br>如果<code>set hive.auto.convert.join.noconditionaltask.size = 32</code>，输出的是<strong>map join operator</strong><br>如果<code>set hive.auto.convert.join.noconditionaltask.size = 31</code>，输出的将是<strong>common join operator</strong></p>
-<ul>
-<li>使用<code>MAPJOIN</code>可以强行使用map join，但是在使用这个关键字时要保证以下参数设置为false(Default is true in Hive 0.13):<br><code>set hive.ignore.mapjoin.hint=false;</code><br>实例：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select /*+ MAPJOIN(a) */ a.* from passwords a, passwords2 b where a.col0=b.col0 ;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="3-Bucket-Map-Join"><a href="#3-Bucket-Map-Join" class="headerlink" title="3. Bucket Map Join"></a>3. Bucket Map Join</h1><h2 id="工作原理-2"><a href="#工作原理-2" class="headerlink" title="工作原理"></a>工作原理</h2><p>Join仅在Mapper中完成，在表A bucket 1的mapper中只会获取表B bucket 1的数据来完成join操作<br><img src="/images/2020/05/19/a1e6dd90-99ba-11ea-b3df-2fb8de1fd9ea.png" alt="bucket map join.png"></p>
-<p>Bucket Map Join 执行计划分两步：</p>
-<ol>
-<li>先将小表做map操作变成hashtable，然后广播到所有大表的map端，大表的map端接受了number_buckets个小表的hashtable并不需要合成一个大的hashtable,直接可以进行map操作</li>
-<li>大表map操作会产生number_buckets 个split，每个split 的标记跟小表的hashtable 标记是一样的, 在执行join 操作的时候，只需要将小表的一个hashtable 放入内存即可，然后将大表的对应的split 拿出来进行判断</li>
-</ol>
-<h2 id="应用场景-2"><a href="#应用场景-2" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
-<li>所有的表都非常大</li>
-<li>关联字段使用的是表的分桶字段</li>
-<li>一个表的分桶数是另一个表的分桶数的倍数</li>
-<li>所有的表都是不排序的</li>
-</ul>
-<h2 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h2><ul>
-<li>SQL 中的关联字段和表的分桶字段要一致才行。只要关联字段和分桶字段不一致，我们就没办法使用 bucket map join 了</li>
-<li>并没有解决map join 在小表必须完全装载进内存的限制</li>
-</ul>
-<h2 id="注意点-2"><a href="#注意点-2" class="headerlink" title="注意点"></a>注意点</h2><ul>
-<li><p>首先，表的分桶字段与关联字段要保持一致。另外，在插入数据的时候要对表做分桶，其中有一种方式就是在插入数据之前把<code>hive.enforce.bucketing</code>参数设置为 true，例如:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create table b1(col0 string,col1 string,col2 string,col3 string,col4 string,col5 string,col6 string)</span><br><span class="line">clustered by (col0) into 32 buckets;</span><br><span class="line"></span><br><span class="line">create table b2(col0 string,col1 string,col2 string,col3 string,col4 string,col5 string,col6 string)</span><br><span class="line">clustered by (col0) into 8 buckets;</span><br><span class="line"></span><br><span class="line">set hive.enforce.bucketing = true; </span><br><span class="line">From passwords insert OVERWRITE  table b1 select * limit 10000;</span><br><span class="line">From passwords insert OVERWRITE  table b2 select * limit 10000;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>进行关联时必须设置<code>hive.optimize.bucketmapjoin=true</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set hive.optimize.bucketmapjoin=true;</span><br><span class="line">select /*+ MAPJOIN(b2) */ b1.* from b1,b2 where b1.col0=b2.col0 ;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="4-Sort-Merge-Bucket-SMB-Map-Join"><a href="#4-Sort-Merge-Bucket-SMB-Map-Join" class="headerlink" title="4.Sort Merge Bucket(SMB) Map Join"></a>4.Sort Merge Bucket(SMB) Map Join</h1><h2 id="工作原理-3"><a href="#工作原理-3" class="headerlink" title="工作原理"></a>工作原理</h2><p>和Bucket Map Join一样，Join仅在Mapper中完成，对应的桶也是在mapper阶段完成关联<br><img src="/images/2020/05/19/87ff80d0-99c4-11ea-b3df-2fb8de1fd9ea.png" alt="smb.png"></p>
-<h2 id="应用场景-3"><a href="#应用场景-3" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
-<li>所有的表都非常大</li>
-<li>关联字段使用的是表的分桶字段</li>
-<li>一个表的分桶数等于另一个表的分桶数</li>
-<li>所有的表都是排序的</li>
-</ul>
-<h2 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h2><ul>
-<li>SQL 中的关联字段和表的分桶字段要一致才行</li>
-<li>分区表有可能会变慢</li>
-</ul>
-<h2 id="解释计划-2"><a href="#解释计划-2" class="headerlink" title="解释计划"></a>解释计划</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> explain select  c1.* from c1,c2 <span class="built_in">where</span> c1.col0=c2.col0;       </span></span><br><span class="line">OK</span><br><span class="line">STAGE DEPENDENCIES:</span><br><span class="line">  Stage-1 is a root stage</span><br><span class="line">  Stage-0 is a root stage</span><br><span class="line"></span><br><span class="line">STAGE PLANS:</span><br><span class="line">  Stage: Stage-1</span><br><span class="line">    Map Reduce</span><br><span class="line">      Map Operator Tree:</span><br><span class="line">          TableScan</span><br><span class="line">            alias: c1</span><br><span class="line">            Statistics: Num rows: 9963904 Data size: 477218560 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Sorted Merge Bucket Map Join Operator</span><br><span class="line">              condition map:</span><br><span class="line">                   Inner Join 0 to 1</span><br><span class="line">              condition expressions:</span><br><span class="line">                0 &#123;col0&#125; &#123;col1&#125; &#123;col2&#125; &#123;col3&#125; &#123;col4&#125; &#123;col5&#125; &#123;col6&#125;</span><br><span class="line">                1 &#123;col0&#125;</span><br><span class="line">              keys:</span><br><span class="line">                0 col0 (type: string)</span><br><span class="line">                1 col0 (type: string)</span><br><span class="line">              outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6, _col9</span><br><span class="line">              Filter Operator</span><br><span class="line">                predicate: (_col0 = _col9) (type: boolean)</span><br><span class="line">                Select Operator</span><br><span class="line">                  expressions: _col0 (type: string), _col1 (type: string), _col2 (type: string), _col3 (type: string), _col4 (type: string), _col5 (type: string), _col6 (type: string)</span><br><span class="line">                  outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6</span><br><span class="line">                  File Output Operator</span><br><span class="line">                    compressed: false</span><br><span class="line">                    table:</span><br><span class="line">                        input format: org.apache.hadoop.mapred.TextInputFormat</span><br><span class="line">                        output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat</span><br><span class="line">                        serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe</span><br><span class="line"></span><br><span class="line">  Stage: Stage-0</span><br><span class="line">    Fetch Operator</span><br><span class="line">      limit: -1</span><br><span class="line"></span><br><span class="line">Time taken: 0.134 seconds, Fetched: 37 row(s)</span><br></pre></td></tr></table></figure>
-<h2 id="注意点-3"><a href="#注意点-3" class="headerlink" title="注意点"></a>注意点</h2><ul>
-<li>表必须是根据某个字段进行分桶的表，并且分桶字段=排序字段=Join字段。</li>
-<li><p>另外，数据在插入前需要开启分桶设置，<code>hive.enforce.bucketing=true</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">create table c1(col0 string,col1 string,col2 string,col3 string,col4 string,col5 string,col6 string)</span><br><span class="line">clustered by (col0) sorted by (col0) into 32 buckets;</span><br><span class="line"></span><br><span class="line">create table c2(col0 string,col1 string,col2 string,col3 string,col4 string,col5 string,col6 string)</span><br><span class="line">clustered by (col0) sorted by (col0) into 32 buckets;</span><br><span class="line"></span><br><span class="line">set hive.enforce.bucketing = true; </span><br><span class="line"></span><br><span class="line">From passwords insert OVERWRITE  table c1 select *  order by col0;</span><br><span class="line"></span><br><span class="line">From passwords insert OVERWRITE  table c2 select *  order by col0;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查询时，需要以下参数将SMB join转换为 SMB map join</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set hive.auto.convert.sortmerge.join=true;</span><br><span class="line">set hive.optimize.bucketmapjoin = true;</span><br><span class="line">set hive.optimize.bucketmapjoin.sortedmerge = true;</span><br><span class="line">set hive.auto.convert.sortmerge.join.noconditionaltask=true;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过<code>hive.auto.convert.sortmerge.join.bigtable.selection.policy&quot;</code>确定流表选择策略，可选值有：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">org.apache.hadoop.hive.ql.optimizer.AvgPartitionSizeBasedBigTableSelectorForAutoSMJ (default)</span><br><span class="line">org.apache.hadoop.hive.ql.optimizer.LeftmostBigTableSelectorForAutoSMJ</span><br><span class="line">org.apache.hadoop.hive.ql.optimizer.TableSizeBasedBigTableSelectorForAutoSMJ</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用<code>MAPJOIN</code>可以确定哪个表较小，应该将其加载到内存中。</p>
-</li>
-<li>小表是按需加载到内存</li>
-<li>支持Outer join</li>
-</ul>
-<h1 id="5-Skew-Join"><a href="#5-Skew-Join" class="headerlink" title="5.Skew Join"></a>5.Skew Join</h1><h2 id="工作原理-4"><a href="#工作原理-4" class="headerlink" title="工作原理"></a>工作原理</h2><p>表 A 和表 B join，并且在 ID 为12345 时发生了数据倾斜，假设在表 B 中倾斜的数据量比表 A 少，</p>
-<p>这时，首先读取B，把 B 中所有的倾斜了的数据拿出来，存到内存中（可以用一个哈希表来存）。</p>
-<p>然后，运行mapper读取表 A ，如果是倾斜的数据，则通过 B 存放在内存中的哈希表来 join；如果不是倾斜的 key，则按正常的 reduce 端 join 流程进行。</p>
-<p>同时地，也会运行mapper读取表 B数据，将不是倾斜的 key，则按正常的 reduce 端 join 流程进行</p>
-<p>这样就在map端完成了倾斜数据的处理，不会让某一个reducer中数据量爆炸，从而拖累处理速度。</p>
-<p>假设B的行很少，而键在A中倾斜。因此可以将这些行加载到内存中。</p>
-<p><img src="/images/2020/05/19/986bcfa0-99c9-11ea-b3df-2fb8de1fd9ea.png" alt="skew join.png"></p>
-<h2 id="应用场景-4"><a href="#应用场景-4" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
-<li>多表关联时，其中有一个表有大key</li>
-</ul>
-<h2 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h2><ul>
-<li>一个表会被读取两次</li>
-<li>用户需要感知到倾斜的字段</li>
-</ul>
-<p>解释计划<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> explain select a.* from passwords a, passwords2 b <span class="built_in">where</span> a.col0=b.col1;  </span></span><br><span class="line">OK</span><br><span class="line">STAGE DEPENDENCIES:</span><br><span class="line">  Stage-7 is a root stage , consists of Stage-1</span><br><span class="line">  Stage-1</span><br><span class="line">  Stage-4 depends on stages: Stage-1 , consists of Stage-8</span><br><span class="line">  Stage-8</span><br><span class="line">  Stage-3 depends on stages: Stage-8</span><br><span class="line">  Stage-0 is a root stage</span><br><span class="line"></span><br><span class="line">STAGE PLANS:</span><br><span class="line">  Stage: Stage-7</span><br><span class="line">    Conditional Operator</span><br><span class="line"></span><br><span class="line">  Stage: Stage-1</span><br><span class="line">    Map Reduce</span><br><span class="line">      Map Operator Tree:</span><br><span class="line">          TableScan</span><br><span class="line">            alias: b</span><br><span class="line">            Statistics: Num rows: 9961472 Data size: 477102080 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Reduce Output Operator</span><br><span class="line">              key expressions: col1 (type: string)</span><br><span class="line">              sort order: +</span><br><span class="line">              Map-reduce partition columns: col1 (type: string)</span><br><span class="line">              Statistics: Num rows: 9961472 Data size: 477102080 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">              value expressions: col1 (type: string)</span><br><span class="line">          TableScan</span><br><span class="line">            alias: a</span><br><span class="line">            Statistics: Num rows: 9963904 Data size: 477218560 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Reduce Output Operator</span><br><span class="line">              key expressions: col0 (type: string)</span><br><span class="line">              sort order: +</span><br><span class="line">              Map-reduce partition columns: col0 (type: string)</span><br><span class="line">              Statistics: Num rows: 9963904 Data size: 477218560 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">              value expressions: col0 (type: string), col1 (type: string), col2 (type: string), col3 (type: string), col4 (type: string), col5 (type: string), col6 (type: string)</span><br><span class="line">      Reduce Operator Tree:</span><br><span class="line">        Join Operator</span><br><span class="line">          condition map:</span><br><span class="line">               Inner Join 0 to 1</span><br><span class="line">          condition expressions:</span><br><span class="line">            0 &#123;VALUE._col0&#125; &#123;VALUE._col1&#125; &#123;VALUE._col2&#125; &#123;VALUE._col3&#125; &#123;VALUE._col4&#125; &#123;VALUE._col5&#125; &#123;VALUE._col6&#125;</span><br><span class="line">            1 &#123;VALUE._col1&#125;</span><br><span class="line">          handleSkewJoin: true</span><br><span class="line">          outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6, _col10</span><br><span class="line">          Statistics: Num rows: 10960295 Data size: 524940416 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">          Filter Operator</span><br><span class="line">            predicate: (_col0 = _col10) (type: boolean)</span><br><span class="line">            Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">            Select Operator</span><br><span class="line">              expressions: _col0 (type: string), _col1 (type: string), _col2 (type: string), _col3 (type: string), _col4 (type: string), _col5 (type: string), _col6 (type: string)</span><br><span class="line">              outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6</span><br><span class="line">              Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">              File Output Operator</span><br><span class="line">                compressed: false</span><br><span class="line">                Statistics: Num rows: 5480147 Data size: 262470184 Basic stats: COMPLETE Column stats: NONE</span><br><span class="line">                table:</span><br><span class="line">                    input format: org.apache.hadoop.mapred.TextInputFormat</span><br><span class="line">                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat</span><br><span class="line">                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe</span><br><span class="line"></span><br><span class="line">  Stage: Stage-4</span><br><span class="line">    Conditional Operator</span><br><span class="line"></span><br><span class="line">  Stage: Stage-8</span><br><span class="line">    Map Reduce Local Work</span><br><span class="line">      Alias -&gt; Map Local Tables:</span><br><span class="line">        1 </span><br><span class="line">          Fetch Operator</span><br><span class="line">            limit: -1</span><br><span class="line">      Alias -&gt; Map Local Operator Tree:</span><br><span class="line">        1 </span><br><span class="line">          TableScan</span><br><span class="line">            HashTable Sink Operator</span><br><span class="line">              condition expressions:</span><br><span class="line">                0 &#123;0_VALUE_0&#125; &#123;0_VALUE_1&#125; &#123;0_VALUE_2&#125; &#123;0_VALUE_3&#125; &#123;0_VALUE_4&#125; &#123;0_VALUE_5&#125; &#123;0_VALUE_6&#125;</span><br><span class="line">                1 &#123;1_VALUE_0&#125;</span><br><span class="line">              keys:</span><br><span class="line">                0 joinkey0 (type: string)</span><br><span class="line">                1 joinkey0 (type: string)</span><br><span class="line"></span><br><span class="line">  Stage: Stage-3</span><br><span class="line">    Map Reduce</span><br><span class="line">      Map Operator Tree:</span><br><span class="line">          TableScan</span><br><span class="line">            Map Join Operator</span><br><span class="line">              condition map:</span><br><span class="line">                   Inner Join 0 to 1</span><br><span class="line">              condition expressions:</span><br><span class="line">                0 &#123;0_VALUE_0&#125; &#123;0_VALUE_1&#125; &#123;0_VALUE_2&#125; &#123;0_VALUE_3&#125; &#123;0_VALUE_4&#125; &#123;0_VALUE_5&#125; &#123;0_VALUE_6&#125;</span><br><span class="line">                1 &#123;1_VALUE_0&#125;</span><br><span class="line">              keys:</span><br><span class="line">                0 joinkey0 (type: string)</span><br><span class="line">                1 joinkey0 (type: string)</span><br><span class="line">              outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6, _col10</span><br><span class="line">              Filter Operator</span><br><span class="line">                predicate: (_col0 = _col10) (type: boolean)</span><br><span class="line">                Select Operator</span><br><span class="line">                  expressions: _col0 (type: string), _col1 (type: string), _col2 (type: string), _col3 (type: string), _col4 (type: string), _col5 (type: string), _col6 (type: string)</span><br><span class="line">                  outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6</span><br><span class="line">                  File Output Operator</span><br><span class="line">                    compressed: false</span><br><span class="line">                    table:</span><br><span class="line">                        input format: org.apache.hadoop.mapred.TextInputFormat</span><br><span class="line">                        output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat</span><br><span class="line">                        serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe</span><br><span class="line">      Local Work:</span><br><span class="line">        Map Reduce Local Work</span><br><span class="line"></span><br><span class="line">  Stage: Stage-0</span><br><span class="line">    Fetch Operator</span><br><span class="line">      limit: -1</span><br><span class="line"></span><br><span class="line">Time taken: 0.331 seconds, Fetched: 110 row(s)</span><br></pre></td></tr></table></figure></p>
-<p>通过查询计划,我们看到有2个join操作，一个是common join和一个是map join，另外也显示了<code>handleSkewJoin: true</code></p>
-<h2 id="注意点-4"><a href="#注意点-4" class="headerlink" title="注意点"></a>注意点</h2><ul>
-<li><p>需要启动skew join</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.optimize.skewjoin=true;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置倾斜键大小:如果在join运算符中看到具有相同键的行数超过指定的数量，则我们认为该键是倾斜连接键。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.skewjoin.key=100000;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>翻译自：<a href="http://www.openkb.info/2014/11/understanding-hive-joins-in-explain.html" target="_blank" rel="noopener">Understanding Hive joins in explain plan output</a></p>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hive</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常运维</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -381,125 +216,20 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/05/19/一文理解Hive的Join们/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/07/01/DolphinScheduler开发环境搭建/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          DolphinScheduler开发环境搭建
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/04/16/关于学习/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">关于学习</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Shuffle-Join-Common-Join"><span class="toc-number">2.</span> <span class="toc-text">1. Shuffle Join(Common Join)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-number">2.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用场景"><span class="toc-number">2.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点"><span class="toc-number">2.3.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解释计划"><span class="toc-number">2.4.</span> <span class="toc-text">解释计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意点"><span class="toc-number">2.5.</span> <span class="toc-text">注意点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Map-Join-Broardcast-Join"><span class="toc-number">3.</span> <span class="toc-text">2.Map Join(Broardcast Join)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理-1"><span class="toc-number">3.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用场景-1"><span class="toc-number">3.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点-1"><span class="toc-number">3.3.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解释计划-1"><span class="toc-number">3.4.</span> <span class="toc-text">解释计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意点-1"><span class="toc-number">3.5.</span> <span class="toc-text">注意点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Bucket-Map-Join"><span class="toc-number">4.</span> <span class="toc-text">3. Bucket Map Join</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理-2"><span class="toc-number">4.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用场景-2"><span class="toc-number">4.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点-2"><span class="toc-number">4.3.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意点-2"><span class="toc-number">4.4.</span> <span class="toc-text">注意点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Sort-Merge-Bucket-SMB-Map-Join"><span class="toc-number">5.</span> <span class="toc-text">4.Sort Merge Bucket(SMB) Map Join</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理-3"><span class="toc-number">5.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用场景-3"><span class="toc-number">5.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点-3"><span class="toc-number">5.3.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解释计划-2"><span class="toc-number">5.4.</span> <span class="toc-text">解释计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意点-3"><span class="toc-number">5.5.</span> <span class="toc-text">注意点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Skew-Join"><span class="toc-number">6.</span> <span class="toc-text">5.Skew Join</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理-4"><span class="toc-number">6.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用场景-4"><span class="toc-number">6.2.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点-4"><span class="toc-number">6.3.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意点-4"><span class="toc-number">6.4.</span> <span class="toc-text">注意点</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2020/">&laquo; Prev</a><a class="page-number" href="/archives/2020/">1</a><span class="page-number current">2</span>
+    </nav>
   
 
 
@@ -532,8 +262,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
