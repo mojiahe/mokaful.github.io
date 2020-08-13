@@ -188,7 +188,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">101字</span>
+        <span class="post-count">160字</span>
       </span>
     </span>
 
@@ -209,7 +209,8 @@
       
 
   
-    <h1 id="那些SQL转换DSL们"><a href="#那些SQL转换DSL们" class="headerlink" title="那些SQL转换DSL们"></a>那些SQL转换DSL们</h1><p><a href="https://elasticsearch.cn/article/145" target="_blank" rel="noopener">elasticsearch-query-tookit</a></p>
+    <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>项目中需要开发一个自动化接口平台，每次对外发布接口，只需要配置ES链接和相应的DSL就可以发布一个接口，这就需要用到动态的DSL语句</p>
+<h1 id="那些SQL转换DSL们"><a href="#那些SQL转换DSL们" class="headerlink" title="那些SQL转换DSL们"></a>那些SQL转换DSL们</h1><p><a href="https://elasticsearch.cn/article/145" target="_blank" rel="noopener">elasticsearch-query-tookit</a></p>
 <h1 id="动态DSL方案"><a href="#动态DSL方案" class="headerlink" title="动态DSL方案"></a>动态DSL方案</h1><ul>
 <li><p>MyBatis保存动态DSL，利用Mybatis根据条件解析出真正的DSL，之后结合scroll/search_after方式，使用ES rest high level api接口完成分页查询<br><a href="https://blog.csdn.net/u010858605/article/details/104636556/" target="_blank" rel="noopener">动态DSL参考</a></p>
 </li>
