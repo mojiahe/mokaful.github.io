@@ -6,16 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.mokaful.fun">
-  <title>文章分类 | Mokaful&#39;s Blog</title>
+  <title>Elasticsearch分页功能实现 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="文章分类">
-<meta property="og:url" content="https://www.mokaful.fun/categories/index.html">
+  <meta name="description" content="ES分页功能在使用Elasticsearch的检索功能时，一定会遇到需要像传统数据库如MySQL分页返回数据的场景。在我看来，分页是服务器减少数据传输从而提高响应速度的手段，但是在放到ES中，如果使用不恰当，不仅不用提高响应速度，严重时还会让服务端奔溃。 记录一下ES中提供的三种分页模式：  From+Size分页 Scroll滚动游标分页 Search_after分页  三种分页各有千秋，但在理">
+<meta name="keywords" content="Elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch分页功能实现">
+<meta property="og:url" content="https://www.mokaful.fun/2020/08/12/Elasticsearch分页功能实现/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
+<meta property="og:description" content="ES分页功能在使用Elasticsearch的检索功能时，一定会遇到需要像传统数据库如MySQL分页返回数据的场景。在我看来，分页是服务器减少数据传输从而提高响应速度的手段，但是在放到ES中，如果使用不恰当，不仅不用提高响应速度，严重时还会让服务端奔溃。 记录一下ES中提供的三种分页模式：  From+Size分页 Scroll滚动游标分页 Search_after分页  三种分页各有千秋，但在理">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-23T09:12:45.000Z">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/08/13/dc7906e0-dd76-11ea-aa39-efbb8e32977e.png">
+<meta property="og:image" content="https://www.mokaful.fun/images/2020/08/13/ee3be1d0-dd77-11ea-aa39-efbb8e32977e.png">
+<meta property="og:updated_time" content="2020-08-13T16:10:56.418Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文章分类">
+<meta name="twitter:title" content="Elasticsearch分页功能实现">
+<meta name="twitter:description" content="ES分页功能在使用Elasticsearch的检索功能时，一定会遇到需要像传统数据库如MySQL分页返回数据的场景。在我看来，分页是服务器减少数据传输从而提高响应速度的手段，但是在放到ES中，如果使用不恰当，不仅不用提高响应速度，严重时还会让服务端奔溃。 记录一下ES中提供的三种分页模式：  From+Size分页 Scroll滚动游标分页 Search_after分页  三种分页各有千秋，但在理">
+<meta name="twitter:image" content="https://www.mokaful.fun/images/2020/08/13/dc7906e0-dd76-11ea-aa39-efbb8e32977e.png">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -163,45 +170,127 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-Elasticsearch分页功能实现" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      文章分类
+      Elasticsearch分页功能实现
     </h1>
   
 
         
-        <a href="/categories/index.html" class="archive-article-date">
-  	<time datetime="2019-07-23T08:43:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-23</time>
+        <a href="/2020/08/12/Elasticsearch分页功能实现/" class="archive-article-date">
+  	<time datetime="2020-08-11T16:01:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-12</time>
 </a>
         
        
+            <span class="archive-article-date">
+              阅读量 <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
          <!-- 开始添加字数统计-->
         
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.9k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">6分</span>
+      </span>
+    </span>
+</div>
+          
         <!-- 添加完成 -->
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
 
-<div class="category-all-page">
- 
-  <div class="category-all">
-  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technology/">Technology</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thinking/">Thinking</a><span class="category-list-count">1</span></li></ul>
-  </div>
   
-</div>
-
+    <h1 id="ES分页功能"><a href="#ES分页功能" class="headerlink" title="ES分页功能"></a>ES分页功能</h1><p>在使用Elasticsearch的检索功能时，一定会遇到需要像传统数据库如MySQL分页返回数据的场景。在我看来，分页是服务器减少数据传输从而提高响应速度的手段，但是在放到ES中，如果使用不恰当，不仅不用提高响应速度，严重时还会让服务端奔溃。</p>
+<p>记录一下ES中提供的三种分页模式：</p>
+<ul>
+<li>From+Size分页</li>
+<li>Scroll滚动游标分页</li>
+<li>Search_after分页</li>
+</ul>
+<p>三种分页各有千秋，但在理解分页之前要先理解一下ES分布式查询的流程。</p>
+<h1 id="ES分布式查询流程"><a href="#ES分布式查询流程" class="headerlink" title="ES分布式查询流程"></a>ES分布式查询流程</h1><p>ES的查询过程划分为query查询和fetch获取数据两个阶段。</p>
+<h2 id="Query阶段"><a href="#Query阶段" class="headerlink" title="Query阶段"></a>Query阶段</h2><p><img src="/images/2020/08/13/dc7906e0-dd76-11ea-aa39-efbb8e32977e.png" alt="image.png"></p>
+<p>1.假设客户端发送一个search请求落到了Node 3上，那么Node 3会创建一个优先级队列，它的大小=from+size</p>
+<p>2.接着Node 3转发这个search请求到索引里面每一个主shard或者副本shard上，每个shard会在本地查询，然后添加结果到本地的排序好的优先级队列里面。</p>
+<p>3.每个shard返回docId和所有参与排序字段的值例如_score到优先级队列里面，然后再返回给coordinating节点，这里也就是Node 3，然后Node 3负责将所有shard里面的数据给合并到一个全局的排序的列表。</p>
+<blockquote>
+<p>上面提到一个术语叫coordinating node，这个节点是当search请求随机负载的发送到一个节点上，然后这个节点就会成为一个coordinating node，它的职责是广播search请求到所有相关的shard上，然后合并他们的响应结果到一个全局的排序列表中，然后进行第二个fetch阶段。<br>这里有三个点需要注意一下：<br>P1：注意这个结果集仅仅包含docId和所有排序的字段值<br>P2：search请求可以被主shard或者副本shard处理，这也是为什么我们说增加副本的个数就能增加搜索吞吐量的原因<br>P3：coordinating节点将会通过round-robin的方式自动负载均衡选出</p>
+</blockquote>
+<h2 id="Fetch阶段"><a href="#Fetch阶段" class="headerlink" title="Fetch阶段"></a>Fetch阶段</h2><p>query阶段标识了哪些文档（_docId）满足了该次的search请求，但是我们仍然需要检索（使用_docId）回document整条数据，这个阶段称为fetch。<br><img src="/images/2020/08/13/ee3be1d0-dd77-11ea-aa39-efbb8e32977e.png" alt="image.png"><br>1.coordinating 节点标识了那些document需要被拉取出来，并发送一个批量的mutil get请求到相关的shard上</p>
+<p>2.每个shard加载相关document，如果需要他们，他们将会被返回到coordinating 节点上</p>
+<p>3.一旦所有的document被拉取回来，coordinating节点将会返回结果集到客户端上</p>
+<blockquote>
+<p>这里需要注意，coordinating节点拉取的时候只拉取需要被拉取的数据，比如from=90，size=10，那么fetch只会读取需要被读取的10条数据，这10条数据可能在一个shard上，也可能在多个shard上所以 coordinating节点会构建一个multi-get请求并发送到每一个shard上，每个shard会根据需要从_source字段里面获取数据，一旦所有的数据返回，coordinating节点会组装数据进入单个response里面然后将其返回给最终的client</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1.在query阶段会从所有的shard上读取相关document的docId及相关的排序字段值，并最终在coordinating节点上收集所有的结果数进入一个全局的排序列表后。<br>2.coordinating节点根据from+size获取指定page页的数据、获取这些docId后再构建一个multi-get请求发送相关的shard上从_source里面获取需要加载的数据，最终再返回给client端</p>
+<h2 id="From-To分页"><a href="#From-To分页" class="headerlink" title="From+To分页"></a>From+To分页</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>coordinating节点维持一个全局排序的列表，然后再在列表中获取From+size位置的数据返回给客户端。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">POST /library/_search</span><br><span class="line">&#123;</span><br><span class="line">  "from":1,</span><br><span class="line">  "size" : 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>1.这种分页方式只适合少量数据，因为随from增大（页码越来越大），查询的时间就会越大，而且数据量越大，查询的效率指数下降</p>
+<p>2.from+size在数据量不大的情况下，效率比较高</p>
+<p>3.在数据量非常大的情况下，随from增大（页码越来越大），from+size分页会把全部记录加载到coordinating节点的内存中，这样做不但运行速度特别慢，而且容易让es出现内存不足而挂掉。</p>
+<p>比如要3个节点的集群、取第5001页、每页10条的数据时，在分页的时候，elasticsearch需要首先在每一个节点上取出50020 <em> 3的数据，然后和每一个节点的所有数据进行排序，取出50020 </em> 3的数据排序后，再在50020 * 3数据中取50010到50020的数据，然后返回。这样随着数据量的增大，每次分页时排序的开销会越来越大。</p>
+<h2 id="Scroll游标分页"><a href="#Scroll游标分页" class="headerlink" title="Scroll游标分页"></a>Scroll游标分页</h2><p>为了解决From+size的分页问题，elasticsearch提供了一个Scroll滚动的方式</p>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>Scroll滚动就是对某次查询生成一个游标scroll_id，后续的查询只需要根据这个游标去取数据，直到结果集中返回的 hits 字段为空，就表示遍历结束。</p>
+<blockquote>
+<p>scroll_id 的生成可以理解为建立了一个临时的历史快照，在此之后的增删改查等操作不会影响到这个快照的结果</p>
+</blockquote>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 初始化游标，每次查一条</span></span><br><span class="line">POST /library/_search?scroll=1m</span><br><span class="line">&#123;</span><br><span class="line">  "size" : 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下一页</span></span><br><span class="line">POST /_search/scroll</span><br><span class="line">&#123;</span><br><span class="line">  "scroll":"1m",</span><br><span class="line">  "scroll_id":"FGluY2x1ZGVfY29udGV4dF91dWlkDXF1ZXJ5QW5kRmV0Y2gBFDNoVjg2SE1CQmFHb2pyb0pfM1NYAAAAAAABK2wWYXI4ZDFZdUxSZjJ4emYxT0tUVy1EUQ=="</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>官方的建议Scroll滚动并不是用于实时的请求，因为每一个 scroll_id 不仅会占用大量的资源（特别是排序的请求），而且是生成的历史快照，对于数据的变更不会反映到快照上。这种方式往往用于非实时处理大量数据的情况，比如要进行数据迁移或者索引变更之类的</p>
+<h2 id="Search-after分页"><a href="#Search-after分页" class="headerlink" title="Search_after分页"></a>Search_after分页</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>search_after 分页的方式和 scroll 有一些显著的区别，首先它是根据上一页的最后一条数据来确定下一页的位置，同时在分页请求的过程中，如果有索引数据的增删改查，这些变更也会实时的反映到游标上。</p>
+<p>为了找到每一页最后一条数据，每个文档必须有一个全局唯一值，这种分页方式其实和目前 moa 内存中使用rbtree 分页的原理一样，官方推荐使用 _id 作为全局唯一值，其实使用业务层的 id 也可以</p>
+<h3 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> search_after开始</span></span><br><span class="line">POST /library/_search</span><br><span class="line">&#123;</span><br><span class="line">  "size": 1,</span><br><span class="line">  "sort": [</span><br><span class="line">    &#123;</span><br><span class="line">      "release_date": &#123;</span><br><span class="line">        "order": "desc"</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> search_after参数就是上一次sort返回的数据，如果sort返回了负数，说明没有下一页</span></span><br><span class="line">POST /library/_search</span><br><span class="line">&#123;</span><br><span class="line">  "size": 1,</span><br><span class="line">  "search_after": [612144000000],</span><br><span class="line">  "sort": [</span><br><span class="line">    &#123;</span><br><span class="line">      "release_date": &#123;</span><br><span class="line">        "order": "desc"</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>search_after 适用于深度分页+ 排序，因为每一页的数据依赖于上一页最后一条数据，所以无法跳页请求。</p>
+<p>且返回的始终是最新的数据，在分页过程中数据的位置可能会有变更。这种分页方式更加符合moa的业务场景。</p>
+<h1 id="ES-SQL分页功能"><a href="#ES-SQL分页功能" class="headerlink" title="ES-SQL分页功能"></a>ES-SQL分页功能</h1><p>在ES6.3开始支持的SQL功能中，只能使用<code>limit</code>关键字加<code>size</code>限制返回数据量，还不支持<code>offset</code>偏移的功能。<br>而<code>limit</code>就是对应DSL中的size</p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+  
 
     </div>
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Elasticsearch</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -251,7 +340,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/categories/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/08/12/Elasticsearch分页功能实现/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -263,6 +352,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2020/08/14/Easticsearch动态DSL/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Easticsearch动态DSL
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/11/Mac上安装Elasticsearch7-8-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mac上安装Elasticsearch7.8.1</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -284,7 +392,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ES分页功能"><span class="toc-number">1.</span> <span class="toc-text">ES分页功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ES分布式查询流程"><span class="toc-number">2.</span> <span class="toc-text">ES分布式查询流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Query阶段"><span class="toc-number">2.1.</span> <span class="toc-text">Query阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fetch阶段"><span class="toc-number">2.2.</span> <span class="toc-text">Fetch阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">2.3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#From-To分页"><span class="toc-number">2.4.</span> <span class="toc-text">From+To分页</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理"><span class="toc-number">2.4.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">2.4.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结-1"><span class="toc-number">2.4.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scroll游标分页"><span class="toc-number">2.5.</span> <span class="toc-text">Scroll游标分页</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理-1"><span class="toc-number">2.5.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-1"><span class="toc-number">2.5.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结-2"><span class="toc-number">2.5.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Search-after分页"><span class="toc-number">2.6.</span> <span class="toc-text">Search_after分页</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-2"><span class="toc-number">2.6.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结-3"><span class="toc-number">2.6.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ES-SQL分页功能"><span class="toc-number">3.</span> <span class="toc-text">ES-SQL分页功能</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -294,6 +402,16 @@
 </aside>
 
 
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -325,7 +443,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

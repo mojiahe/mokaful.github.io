@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.mokaful.fun">
-  <title>文章分类 | Mokaful&#39;s Blog</title>
+  <title>Easticsearch动态DSL | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="文章分类">
-<meta property="og:url" content="https://www.mokaful.fun/categories/index.html">
+  <meta name="description" content="那些SQL转换DSL们elasticsearch-query-tookit 动态DSL方案 MyBatis保存动态DSL，利用Mybatis根据条件解析出真正的DSL，之后结合scroll/search_after方式，使用ES rest high level api接口完成分页查询动态DSL参考  MyBatis保存动态SQL，将SQL转换成DSL，之后结合search_after方式完成分页查">
+<meta name="keywords" content="Elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Easticsearch动态DSL">
+<meta property="og:url" content="https://www.mokaful.fun/2020/08/14/Easticsearch动态DSL/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
+<meta property="og:description" content="那些SQL转换DSL们elasticsearch-query-tookit 动态DSL方案 MyBatis保存动态DSL，利用Mybatis根据条件解析出真正的DSL，之后结合scroll/search_after方式，使用ES rest high level api接口完成分页查询动态DSL参考  MyBatis保存动态SQL，将SQL转换成DSL，之后结合search_after方式完成分页查">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-23T09:12:45.000Z">
+<meta property="og:updated_time" content="2020-08-13T16:11:10.657Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文章分类">
+<meta name="twitter:title" content="Easticsearch动态DSL">
+<meta name="twitter:description" content="那些SQL转换DSL们elasticsearch-query-tookit 动态DSL方案 MyBatis保存动态DSL，利用Mybatis根据条件解析出真正的DSL，之后结合scroll/search_after方式，使用ES rest high level api接口完成分页查询动态DSL参考  MyBatis保存动态SQL，将SQL转换成DSL，之后结合search_after方式完成分页查">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -163,45 +167,94 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-Easticsearch动态DSL" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      文章分类
+      Easticsearch动态DSL
     </h1>
   
 
         
-        <a href="/categories/index.html" class="archive-article-date">
-  	<time datetime="2019-07-23T08:43:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-23</time>
+        <a href="/2020/08/14/Easticsearch动态DSL/" class="archive-article-date">
+  	<time datetime="2020-08-13T16:10:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-14</time>
 </a>
         
        
+            <span class="archive-article-date">
+              阅读量 <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
          <!-- 开始添加字数统计-->
         
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">101字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">1分</span>
+      </span>
+    </span>
+</div>
+          
         <!-- 添加完成 -->
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
 
-<div class="category-all-page">
- 
-  <div class="category-all">
-  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technology/">Technology</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Thinking/">Thinking</a><span class="category-list-count">1</span></li></ul>
-  </div>
   
-</div>
-
+    <h1 id="那些SQL转换DSL们"><a href="#那些SQL转换DSL们" class="headerlink" title="那些SQL转换DSL们"></a>那些SQL转换DSL们</h1><p><a href="https://elasticsearch.cn/article/145" target="_blank" rel="noopener">elasticsearch-query-tookit</a></p>
+<h1 id="动态DSL方案"><a href="#动态DSL方案" class="headerlink" title="动态DSL方案"></a>动态DSL方案</h1><ul>
+<li><p>MyBatis保存动态DSL，利用Mybatis根据条件解析出真正的DSL，之后结合scroll/search_after方式，使用ES rest high level api接口完成分页查询<br><a href="https://blog.csdn.net/u010858605/article/details/104636556/" target="_blank" rel="noopener">动态DSL参考</a></p>
+</li>
+<li><p>MyBatis保存动态SQL，将SQL转换成DSL，之后结合search_after方式完成分页查询</p>
+</li>
+<li><p>Freemark模版结合DSL进行动态DSL片段，使用ES rest high level api结合WrapperQueryBuilder</p>
+</li>
+</ul>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+  
 
     </div>
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Elasticsearch</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -251,7 +304,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/categories/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/08/14/Easticsearch动态DSL/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -263,6 +316,16 @@
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/12/Elasticsearch分页功能实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Elasticsearch分页功能实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -284,7 +347,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#那些SQL转换DSL们"><span class="toc-number">1.</span> <span class="toc-text">那些SQL转换DSL们</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动态DSL方案"><span class="toc-number">2.</span> <span class="toc-text">动态DSL方案</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -294,6 +357,16 @@
 </aside>
 
 
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -325,7 +398,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
