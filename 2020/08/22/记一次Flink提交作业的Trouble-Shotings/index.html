@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.mokaful.fun">
-  <title>DolphinScheduler开发环境搭建 | Mokaful&#39;s Blog</title>
+  <title>记一次Flink提交作业的Trouble-Shotings | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="源码下载 本次学习研究以1.2.0Release版本作为开始  由于最近Github抽风，所以从gitee下载了代码，DolphinScheduler Gitee官网另附上DolphinScheduler官网 数据库自行使用docker下载了MySQL5.7+ 前后端环境后端环境搭建参考：开发者指南进行操作 遇到的问题 Mac下使用brew安装的zookeeper无法使用：zkCli进入任何操作都">
-<meta name="keywords" content="DolphinScheduler">
+  <meta name="description" content="背景在完成Flink作业开发之后，将Jar包上传到集群上运行时碰到了一些问题，记录、总结一下经验。 Trouble-shooting of one遇到的Trouble使用Flink Cli往Yarn集群提交作业时遇到错误如下：123456789101112131415161718192021222324252627282930java.lang.NoClassDefFoundError: org/">
+<meta name="keywords" content="Flink入门,Trouble-shoting">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DolphinScheduler开发环境搭建">
-<meta property="og:url" content="https://www.mokaful.fun/2020/07/01/DolphinScheduler开发环境搭建/index.html">
+<meta property="og:title" content="记一次Flink提交作业的Trouble-Shotings">
+<meta property="og:url" content="https://www.mokaful.fun/2020/08/22/记一次Flink提交作业的Trouble-Shotings/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
-<meta property="og:description" content="源码下载 本次学习研究以1.2.0Release版本作为开始  由于最近Github抽风，所以从gitee下载了代码，DolphinScheduler Gitee官网另附上DolphinScheduler官网 数据库自行使用docker下载了MySQL5.7+ 前后端环境后端环境搭建参考：开发者指南进行操作 遇到的问题 Mac下使用brew安装的zookeeper无法使用：zkCli进入任何操作都">
+<meta property="og:description" content="背景在完成Flink作业开发之后，将Jar包上传到集群上运行时碰到了一些问题，记录、总结一下经验。 Trouble-shooting of one遇到的Trouble使用Flink Cli往Yarn集群提交作业时遇到错误如下：123456789101112131415161718192021222324252627282930java.lang.NoClassDefFoundError: org/">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-07-01T10:30:00.650Z">
+<meta property="og:updated_time" content="2020-08-22T09:09:52.985Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DolphinScheduler开发环境搭建">
-<meta name="twitter:description" content="源码下载 本次学习研究以1.2.0Release版本作为开始  由于最近Github抽风，所以从gitee下载了代码，DolphinScheduler Gitee官网另附上DolphinScheduler官网 数据库自行使用docker下载了MySQL5.7+ 前后端环境后端环境搭建参考：开发者指南进行操作 遇到的问题 Mac下使用brew安装的zookeeper无法使用：zkCli进入任何操作都">
+<meta name="twitter:title" content="记一次Flink提交作业的Trouble-Shotings">
+<meta name="twitter:description" content="背景在完成Flink作业开发之后，将Jar包上传到集群上运行时碰到了一些问题，记录、总结一下经验。 Trouble-shooting of one遇到的Trouble使用Flink Cli往Yarn集群提交作业时遇到错误如下：123456789101112131415161718192021222324252627282930java.lang.NoClassDefFoundError: org/">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -167,20 +167,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-DolphinScheduler开发环境搭建" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-记一次Flink提交作业的Trouble-Shotings" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      DolphinScheduler开发环境搭建
+      记一次Flink提交作业的Trouble-Shotings
     </h1>
   
 
         
-        <a href="/2020/07/01/DolphinScheduler开发环境搭建/" class="archive-article-date">
-  	<time datetime="2020-07-01T10:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-01</time>
+        <a href="/2020/08/22/记一次Flink提交作业的Trouble-Shotings/" class="archive-article-date">
+  	<time datetime="2020-08-22T09:09:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-22</time>
 </a>
         
        
@@ -195,7 +195,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">151字</span>
+        <span class="post-count">1.4k字</span>
       </span>
     </span>
 
@@ -204,7 +204,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
+        <span class="post-count">6分</span>
       </span>
     </span>
 </div>
@@ -216,17 +216,35 @@
       
 
   
-    <h1 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h1><blockquote>
-<p>本次学习研究以1.2.0Release版本作为开始</p>
-</blockquote>
-<p>由于最近Github抽风，所以从gitee下载了代码，<a href="https://gitee.com/dolphinscheduler/DolphinScheduler.git" target="_blank" rel="noopener">DolphinScheduler Gitee官网</a><br>另附上<a href="https://dolphinscheduler.apache.org/" target="_blank" rel="noopener">DolphinScheduler官网</a></p>
-<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><p>自行使用docker下载了MySQL5.7+</p>
-<h1 id="前后端环境"><a href="#前后端环境" class="headerlink" title="前后端环境"></a>前后端环境</h1><p>后端环境搭建参考：<a href="https://dolphinscheduler.apache.org/zh-cn/docs/development/development-environment-setup.html" target="_blank" rel="noopener">开发者指南进行操作</a></p>
-<h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><ul>
-<li>Mac下使用brew安装的zookeeper无法使用：zkCli进入任何操作都是ConnectionLoss，使用docker下载zookeeper3.4.14</li>
-<li>API模块无法加载com.mysql.jdbc.driver，需要加入Mysql驱动包，并将scope改成runtime</li>
-<li>Dao和Server模块无法加载com.mysql.jdbc.driver，需要将scope改成runtime</li>
-</ul>
+    <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在完成Flink作业开发之后，将Jar包上传到集群上运行时碰到了一些问题，记录、总结一下经验。</p>
+<h1 id="Trouble-shooting-of-one"><a href="#Trouble-shooting-of-one" class="headerlink" title="Trouble-shooting of one"></a>Trouble-shooting of one</h1><h2 id="遇到的Trouble"><a href="#遇到的Trouble" class="headerlink" title="遇到的Trouble"></a>遇到的Trouble</h2><p>使用Flink Cli往Yarn集群提交作业时遇到错误如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">java.lang.NoClassDefFoundError: org/apache/hadoop/yarn/exceptions/YarnException</span><br><span class="line">        at java.lang.Class.forName0(Native Method)</span><br><span class="line">        at java.lang.Class.forName(Class.java:<span class="number">264</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.loadCustomCommandLine(CliFrontend.java:<span class="number">1073</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.loadCustomCommandLines(CliFrontend.java:<span class="number">1029</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.main(CliFrontend.java:<span class="number">955</span>)</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.yarn.exceptions.YarnException</span><br><span class="line">        at java.net.URLClassLoader.findClass(URLClassLoader.java:<span class="number">382</span>)</span><br><span class="line">        at java.lang.ClassLoader.loadClass(ClassLoader.java:<span class="number">424</span>)</span><br><span class="line">        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:<span class="number">349</span>)</span><br><span class="line">        at java.lang.ClassLoader.loadClass(ClassLoader.java:<span class="number">357</span>)</span><br><span class="line">        ... <span class="number">5</span> more</span><br><span class="line"><span class="number">2020</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">16</span>:<span class="number">08</span>:<span class="number">00</span>,<span class="number">550</span> INFO  org.apache.flink.core.fs.FileSystem                           - Hadoop is not in the classpath/dependencies. The extended set of supported File Systems via Hadoop is not available.</span><br><span class="line"><span class="number">2020</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">16</span>:<span class="number">08</span>:<span class="number">00</span>,<span class="number">597</span> INFO  org.apache.flink.runtime.security.modules.HadoopModuleFactory  - Cannot create Hadoop Security Module because Hadoop cannot be found in the Classpath.</span><br><span class="line"><span class="number">2020</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">16</span>:<span class="number">08</span>:<span class="number">00</span>,<span class="number">614</span> INFO  org.apache.flink.runtime.security.modules.JaasModule          - Jaas file will be created as /tmp/jaas-<span class="number">7795785923448363896</span>.conf.</span><br><span class="line"><span class="number">2020</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">16</span>:<span class="number">08</span>:<span class="number">00</span>,<span class="number">617</span> INFO  org.apache.flink.runtime.security.SecurityUtils               - Cannot install HadoopSecurityContext because Hadoop cannot be found in the Classpath.</span><br><span class="line"><span class="number">2020</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">16</span>:<span class="number">08</span>:<span class="number">00</span>,<span class="number">618</span> INFO  org.apache.flink.client.cli.CliFrontend                       - Running <span class="string">'run'</span> command.</span><br><span class="line"><span class="number">2020</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">16</span>:<span class="number">08</span>:<span class="number">00</span>,<span class="number">624</span> INFO  org.apache.flink.client.cli.CliFrontend                       - Building program from JAR file</span><br><span class="line"><span class="number">2020</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">16</span>:<span class="number">08</span>:<span class="number">00</span>,<span class="number">625</span> ERROR org.apache.flink.client.cli.CliFrontend                       - Invalid command line arguments.</span><br><span class="line">org.apache.flink.client.cli.CliArgsException: Could not build the program from JAR file.</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.run(CliFrontend.java:<span class="number">200</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.parseParameters(CliFrontend.java:<span class="number">893</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.lambda$main$<span class="number">10</span>(CliFrontend.java:<span class="number">966</span>)</span><br><span class="line">        at org.apache.flink.runtime.security.NoOpSecurityContext.runSecured(NoOpSecurityContext.java:<span class="number">30</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.main(CliFrontend.java:<span class="number">966</span>)</span><br><span class="line">Caused by: java.io.FileNotFoundException: JAR file does not exist: -ynm</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.getJarFile(CliFrontend.java:<span class="number">717</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.buildProgram(CliFrontend.java:<span class="number">693</span>)</span><br><span class="line">        at org.apache.flink.client.cli.CliFrontend.run(CliFrontend.java:<span class="number">197</span>)</span><br><span class="line">        ... <span class="number">4</span> more</span><br></pre></td></tr></table></figure></p>
+<h2 id="操作细节"><a href="#操作细节" class="headerlink" title="操作细节"></a>操作细节</h2><p>在安装了Flink的节点node-3上以<code>hdfs</code>用户运行如下命令提交作业：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[hdfs<span class="meta">@test</span>-spark-<span class="number">3</span> flink-<span class="number">1.10</span>.1]$ bin/flink run -m yarn-cluster -ynm test_sync_to_es -c pers.mokaful.flink.job.EsDataSyncJob  /data/job/jars/binlog-sink-to-es-<span class="number">1.0</span>-SNAPSHOT.jar --job.name binlog_sync_to_es</span><br><span class="line"></span><br><span class="line">Setting HADOOP_CONF_DIR=/etc/hadoop/conf because no HADOOP_CONF_DIR was set.</span><br><span class="line">Could not build the program from JAR file.</span><br><span class="line"></span><br><span class="line"><span class="function">Use the help <span class="title">option</span> <span class="params">(-h or --help)</span> to get help on the command.</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="深究原因"><a href="#深究原因" class="headerlink" title="深究原因"></a>深究原因</h2><p>从报错的提示来看，这个<code>ClassNotFoundException</code>让我觉得很奇怪，这明显是缺了Hadoop相关Jar包报的错。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.yarn.exceptions.YarnException</span><br></pre></td></tr></table></figure></p>
+<p>再查阅官网相关资料，原来在Flink1.8中，FIX了<a href="https://ci.apache.org/projects/flink/flink-docs-stable/release-notes/flink-1.8.html" target="_blank" rel="noopener">FLINK-11266</a>，，将flink的包中对hadoop版本进行了剔除。</p>
+<p>这就导致flink中直接缺少hadoop的client相关类，从而无法解析yarn-cluster参数。</p>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/release-notes/flink-1.8.html" target="_blank" rel="noopener">FLINK-11266</a>原文如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Changes to bundling of Hadoop libraries with Flink (FLINK-11266)</span><br><span class="line"></span><br><span class="line">Convenience binaries that include hadoop are no longer released.</span><br><span class="line"></span><br><span class="line">If a deployment relies on flink-shaded-hadoop2 being included in flink-dist, then you must manually download a pre-packaged Hadoop jar from the optional components section of the download page and copy it into the /lib directory. Alternatively, a Flink distribution that includes hadoop can be built by packaging flink-dist and activating the include-hadoop maven profile.</span><br><span class="line"></span><br><span class="line">As hadoop is no longer included in flink-dist by default, specifying -DwithoutHadoop when packaging flink-dist no longer impacts the build.</span><br></pre></td></tr></table></figure></p>
+<h2 id="解决方法们"><a href="#解决方法们" class="headerlink" title="解决方法们"></a>解决方法们</h2><p>1.执行命令前，导入hadoop的classpath<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_CLASSPATH=`hadoop classpath`</span><br></pre></td></tr></table></figure></p>
+<p>2.在bin/config.sh添加如下语句，导入hadoop的classpath<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_CLASSPATH=`hadoop classpath`</span><br></pre></td></tr></table></figure></p>
+<p>3.下载官方预编译的hadoop相关的jar包，下载时，选择对应的hadoop版本，如<code>flink-shaded-hadoop-2-uber-2.8.3-7.0.jar</code>。然后把这个包拷贝到你的flink安装目录下的 lib 目录下面</p>
+<p>4.如官网所说，下载Flink源码，使用<code>include-hadoop</code>的profile手动进行构建</p>
+<h1 id="Trouble-shooting-of-two"><a href="#Trouble-shooting-of-two" class="headerlink" title="Trouble-shooting of two"></a>Trouble-shooting of two</h1><h2 id="遇到的Trouble-1"><a href="#遇到的Trouble-1" class="headerlink" title="遇到的Trouble"></a>遇到的Trouble</h2><p>同样是使用Flink Cli往Yarn集群提交作业时，遇到的另一个错误：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.hadoop.hdfs.web.HftpFileSystem cannot access its superinterfa</span><br></pre></td></tr></table></figure></p>
+<h2 id="操作细节-1"><a href="#操作细节-1" class="headerlink" title="操作细节"></a>操作细节</h2><p>同 trouble one</p>
+<h2 id="深究原因-1"><a href="#深究原因-1" class="headerlink" title="深究原因"></a>深究原因</h2><p>发现工程引入了hadoop2.4.1的jar包：在Idea里面全局搜查<code>HftpFileSystem</code>这个类，发现他在我的工程下的<code>flink-shaded-hadoop-2-2.4.1-9.0.jar</code>这个Jar包里面引入的。</p>
+<pre><code>查看集群目前的Hadoop是3.1.5
+
+细心一想，在trouble shoting one中使用的是集群的hadoop的依赖，而此时工程中又引入了另外一个版本的hadoop依赖，万恶之源-版本不对应
+</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>将工程中相关的<code>flink-shaded-hadoop-2</code>排除掉</p>
+<h1 id="Trouble-shoting-three"><a href="#Trouble-shoting-three" class="headerlink" title="Trouble shoting three"></a>Trouble shoting three</h1><h2 id="遇到的Trouble-2"><a href="#遇到的Trouble-2" class="headerlink" title="遇到的Trouble"></a>遇到的Trouble</h2><p>经过前两个trouble shoting终于将作业运行起来了，但是运行期间又报错了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.NoSuchMethodError: com.google.common.base.Preconditions.checkArgument(ZLjava/lang/String;Ljava/lang/Object;)V</span><br></pre></td></tr></table></figure></p>
+<h2 id="操作细节-2"><a href="#操作细节-2" class="headerlink" title="操作细节"></a>操作细节</h2><p>同trouble shoting one，运行起来之后在flink web ui上查看到作业running之后转换成了restart了</p>
+<h2 id="深究原因-2"><a href="#深究原因-2" class="headerlink" title="深究原因"></a>深究原因</h2><p>从报错信息来看，信息是<code>java.lang.NoSuchMethodError</code>，典型的Java报错，无外乎两种原因：</p>
+<pre><code>1. 运行过程中，找不到相关jar包
+2. 同一类型的 jar 包有不同版本存在，系统无法决定使用哪一个
+
+&gt; 拓展一下：`NoSuchMethodError`是运行时JVM中没有相关类，`ClassnotFoundExption`是编译时发现没有相关类
+</code></pre><p>接着，使用vim命令查看我的jar，搜索这个类，明显存在，而且这个类是<code>com.google.common.base.Preconditions.checkArgument</code>是来自guava包，那很明显是这个guava在运行时存在了多个版本</p>
+<p>Flink运行作业时会加载Flink Home/lib下的jar包和Hadoop classpath的jar包<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@test-spark-3 hadoop-client]# ll lib | grep guava</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root <span class="number">2746681</span> Aug <span class="number">23</span>  <span class="number">2019</span> guava-<span class="number">28.0</span>-jre.jar</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root    <span class="number">2199</span> Aug <span class="number">23</span>  <span class="number">2019</span> listenablefuture-<span class="number">9999.0</span>-empty-to-avoid-conflict-with-guava.jar</span><br><span class="line">[root@test-spark-3 hadoop-client]# pwd</span><br><span class="line">/usr/hdp/current/hadoop-client</span><br></pre></td></tr></table></figure></p>
+<p>果然是guava包版本冲突</p>
+<h2 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h2><p>这种情况，可以使用<code>maven-shade-plugin</code>插件的<code>relocation</code>功能将自己工程下的guava起别名</p>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
   
 
@@ -239,7 +257,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">DolphinScheduler</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flink入门</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Trouble-shoting</a>
         		</li>
       		
 		</ul>
@@ -306,7 +328,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/07/01/DolphinScheduler开发环境搭建/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/08/22/记一次Flink提交作业的Trouble-Shotings/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -320,18 +342,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/08/11/Mac上安装Elasticsearch7-8-1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Mac上安装Elasticsearch7.8.1
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/19/一文理解Hive的Join们/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">一文理解Hive的Join们</div>
+    <a href="/2020/08/14/Easticsearch动态DSL/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Easticsearch动态DSL</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -358,7 +371,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#源码下载"><span class="toc-number">1.</span> <span class="toc-text">源码下载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库"><span class="toc-number">2.</span> <span class="toc-text">数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#前后端环境"><span class="toc-number">3.</span> <span class="toc-text">前后端环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#遇到的问题"><span class="toc-number">4.</span> <span class="toc-text">遇到的问题</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trouble-shooting-of-one"><span class="toc-number">2.</span> <span class="toc-text">Trouble-shooting of one</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的Trouble"><span class="toc-number">2.1.</span> <span class="toc-text">遇到的Trouble</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作细节"><span class="toc-number">2.2.</span> <span class="toc-text">操作细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深究原因"><span class="toc-number">2.3.</span> <span class="toc-text">深究原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法们"><span class="toc-number">2.4.</span> <span class="toc-text">解决方法们</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trouble-shooting-of-two"><span class="toc-number">3.</span> <span class="toc-text">Trouble-shooting of two</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的Trouble-1"><span class="toc-number">3.1.</span> <span class="toc-text">遇到的Trouble</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作细节-1"><span class="toc-number">3.2.</span> <span class="toc-text">操作细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深究原因-1"><span class="toc-number">3.3.</span> <span class="toc-text">深究原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">3.4.</span> <span class="toc-text">解决方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trouble-shoting-three"><span class="toc-number">4.</span> <span class="toc-text">Trouble shoting three</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的Trouble-2"><span class="toc-number">4.1.</span> <span class="toc-text">遇到的Trouble</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作细节-2"><span class="toc-number">4.2.</span> <span class="toc-text">操作细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深究原因-2"><span class="toc-number">4.3.</span> <span class="toc-text">深究原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法-1"><span class="toc-number">4.4.</span> <span class="toc-text">解决方法</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
