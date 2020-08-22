@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.mokaful.fun">
-  <title>Tag: Trouble-shoting | Mokaful&#39;s Blog</title>
+  <title>记一次Flink集成Elasticsearch的Trouble-Shotings | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Mokaful&#39;s Blog">
-<meta property="og:url" content="https://www.mokaful.fun/tags/Trouble-shoting/index.html">
+  <meta name="description" content="背景在Flink1.10.1集成Elasticsearch7 connector时遇到的一些问题 Trouble-shoting one遇到的问题在提交作业到集群上运行时，报错如下：123456789101112131415161718192021222324252627Exception in thread &quot;main&quot; org.apache.flink.api.common.InvalidPr">
+<meta name="keywords" content="Flink入门,Elasticsearch,Trouble-shoting">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次Flink集成Elasticsearch的Trouble-Shotings">
+<meta property="og:url" content="https://www.mokaful.fun/2020/08/22/记一次Flink集成Elasticsearch的Trouble-shotings/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
+<meta property="og:description" content="背景在Flink1.10.1集成Elasticsearch7 connector时遇到的一些问题 Trouble-shoting one遇到的问题在提交作业到集群上运行时，报错如下：123456789101112131415161718192021222324252627Exception in thread &quot;main&quot; org.apache.flink.api.common.InvalidPr">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-08-22T10:04:15.988Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mokaful&#39;s Blog">
+<meta name="twitter:title" content="记一次Flink集成Elasticsearch的Trouble-Shotings">
+<meta name="twitter:description" content="背景在Flink1.10.1集成Elasticsearch7 connector时遇到的一些问题 Trouble-shoting one遇到的问题在提交作业到集群上运行时，报错如下：123456789101112131415161718192021222324252627Exception in thread &quot;main&quot; org.apache.flink.api.common.InvalidPr">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -162,36 +167,83 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-记一次Flink集成Elasticsearch的Trouble-shotings" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/22/记一次Flink集成Elasticsearch的Trouble-shotings/" class="archive-article-date">
-  	<time datetime="2020-08-22T10:04:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/22/记一次Flink集成Elasticsearch的Trouble-shotings/">记一次Flink集成Elasticsearch的Trouble-Shotings</a>
+    <h1 class="article-title" itemprop="name">
+      记一次Flink集成Elasticsearch的Trouble-Shotings
     </h1>
   
 
-        <div class="article-info info-on-right">
+        
+        <a href="/2020/08/22/记一次Flink集成Elasticsearch的Trouble-shotings/" class="archive-article-date">
+  	<time datetime="2020-08-22T10:04:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-22</time>
+</a>
+        
+       
+            <span class="archive-article-date">
+              阅读量 <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+         <!-- 开始添加字数统计-->
+        
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.1k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+</div>
           
+        <!-- 添加完成 -->
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在Flink1.10.1集成Elasticsearch7 connector时遇到的一些问题</p>
+<h1 id="Trouble-shoting-one"><a href="#Trouble-shoting-one" class="headerlink" title="Trouble-shoting one"></a>Trouble-shoting one</h1><h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>在提交作业到集群上运行时，报错如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> org.apache.flink.api.common.InvalidProgramException: The implementation of the ElasticsearchSinkBase is not serializable. The object probably contains or references non serializable fields.</span><br><span class="line">	at org.apache.flink.api.java.ClosureCleaner.clean(ClosureCleaner.java:<span class="number">151</span>)</span><br><span class="line">	at org.apache.flink.api.java.ClosureCleaner.clean(ClosureCleaner.java:<span class="number">71</span>)</span><br><span class="line">	at org.apache.flink.streaming.api.environment.StreamExecutionEnvironment.clean(StreamExecutionEnvironment.java:<span class="number">1821</span>)</span><br><span class="line">	at org.apache.flink.streaming.api.datastream.DataStream.clean(DataStream.java:<span class="number">188</span>)</span><br><span class="line">	at org.apache.flink.streaming.api.datastream.DataStream.addSink(DataStream.java:<span class="number">1328</span>)</span><br><span class="line">	at com.yixkai.bigdata.lyra.flink.datasync.job.EsDataSyncJob.main(EsDataSyncJob.java:<span class="number">70</span>)</span><br><span class="line">Caused by: java.io.NotSerializableException: org.apache.http.impl.client.BasicCredentialsProvider</span><br><span class="line">	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:<span class="number">1184</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeArray(ObjectOutputStream.java:<span class="number">1378</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:<span class="number">1174</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:<span class="number">1548</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:<span class="number">1509</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:<span class="number">1432</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:<span class="number">1178</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:<span class="number">1548</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:<span class="number">1509</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:<span class="number">1432</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:<span class="number">1178</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:<span class="number">1548</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:<span class="number">1509</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:<span class="number">1432</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:<span class="number">1178</span>)</span><br><span class="line">	at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:<span class="number">348</span>)</span><br><span class="line">	at org.apache.flink.util.InstantiationUtil.serializeObject(InstantiationUtil.java:<span class="number">586</span>)</span><br><span class="line">	at org.apache.flink.api.java.ClosureCleaner.clean(ClosureCleaner.java:<span class="number">133</span>)</span><br><span class="line">	... <span class="number">5</span> more</span><br></pre></td></tr></table></figure></p>
+<h2 id="代码细节"><a href="#代码细节" class="headerlink" title="代码细节"></a>代码细节</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CredentialsProvider credentialsProvider =</span><br><span class="line">        <span class="keyword">new</span> BasicCredentialsProvider();</span><br><span class="line">credentialsProvider.setCredentials(AuthScope.ANY,</span><br><span class="line">        <span class="keyword">new</span> UsernamePasswordCredentials(<span class="string">"elastic"</span>, <span class="string">"123456"</span>));</span><br><span class="line"></span><br><span class="line">esSinkBuilder.setRestClientFactory(restClientBuilder -&gt; &#123;</span><br><span class="line">    restClientBuilder.setHttpClientConfigCallback(httpAsyncClientBuilder -&gt; &#123;</span><br><span class="line">        httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider);</span><br><span class="line">        <span class="keyword">return</span> httpAsyncClientBuilder;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="深究原因"><a href="#深究原因" class="headerlink" title="深究原因"></a>深究原因</h2><p>代码参考的是<a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/connectors/elasticsearch.html" target="_blank" rel="noopener">官网</a>提供的实现方式，只是在官网基础上增加了x-pack认证，问题应该不大，官网说明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">For Elasticsearch versions that still uses the now deprecated TransportClient to communicate with the Elasticsearch cluster (i.e., versions equal or below 5.x), note how a Map of Strings is used to configure the ElasticsearchSink. This config map will be directly forwarded when creating the internally used TransportClient. The configuration keys are documented in the Elasticsearch documentation here. Especially important is the cluster.name parameter that must correspond to the name of your cluster.</span><br><span class="line"></span><br><span class="line">For Elasticsearch 6.x and above, internally, the RestHighLevelClient is used for cluster communication. By default, the connector uses the default configurations for the REST client. To have custom configuration for the REST client, users can provide a RestClientFactory implementation when setting up the ElasticsearchClient.Builder that builds the sink.</span><br><span class="line"></span><br><span class="line">Also note that the example only demonstrates performing a single index request for each incoming element. Generally, the ElasticsearchSinkFunction can be used to perform multiple requests of different types (ex., DeleteRequest, UpdateRequest, etc.).</span><br><span class="line"></span><br><span class="line">Internally, each parallel instance of the Flink Elasticsearch Sink uses a BulkProcessor to send action requests to the cluster. This will buffer elements before sending them in bulk to the cluster. The BulkProcessor executes bulk requests one at a time, i.e. there will be no two concurrent flushes of the buffered actions in progress.</span><br></pre></td></tr></table></figure></p>
+<p>官网大概的意思就是，es6.x之后使用的是RestHighLevelClient，flink1.10之后开始推荐使用RestHighLevelClient去访问es</p>
+<p>但是仔细查看报错原因：<code>The implementation of the ElasticsearchSinkBase is not serializable. The object probably contains or references non serializable fields.</code></p>
+<p>从报错中细品：<code>ElasticsearchSinkBase</code>类是可被序列化的，但是他的实现中可能包含或引用了不可序列化的字段？</p>
+<p>果然，<code>BasicCredentialsProvider</code>这个类没有实现序列化接口</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>参考<a href="https://www.thinbug.com/q/52885310" target="_blank" rel="noopener">前辈们的经验</a></p>
+<p>修改成如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">esSinkBuilder.setRestClientFactory(restClientBuilder -&gt; &#123;</span><br><span class="line">    restClientBuilder.setHttpClientConfigCallback(httpAsyncClientBuilder -&gt; &#123;</span><br><span class="line">        CredentialsProvider credentialsProvider1 = <span class="keyword">new</span> BasicCredentialsProvider();</span><br><span class="line">        credentialsProvider1.setCredentials(AuthScope.ANY, <span class="keyword">new</span> UsernamePasswordCredentials(<span class="string">"elastic"</span>, <span class="string">"123456"</span>));</span><br><span class="line">        <span class="keyword">return</span> httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider1);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="延伸知识"><a href="#延伸知识" class="headerlink" title="延伸知识"></a>延伸知识</h2><p>为啥<code>BasicCredentialsProvider</code>这个类没有实现序列化接口在外部实例化不行，需要放到内层进行实例化？Java序列化知识恶补一波</p>
+<h1 id="Trouble-shoting-two"><a href="#Trouble-shoting-two" class="headerlink" title="Trouble-shoting two"></a>Trouble-shoting two</h1><h2 id="遇到的问题-1"><a href="#遇到的问题-1" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>使用flink-es-connector插入数据时报错如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">illegal_argument_exception Failed to parse value [<span class="number">0</span>] as only [<span class="keyword">true</span>] or [<span class="keyword">false</span>] are allowed</span><br></pre></td></tr></table></figure></p>
+<h2 id="深究原因-1"><a href="#深究原因-1" class="headerlink" title="深究原因"></a>深究原因</h2><p>1.全量同步时，在自己实现的mysql2es的数据同步程序中，使用jdbc查询mysql数据再bulk批量往es插入数据时，jdbc将tinyiny(1)类型的数据转换成了boolean类型，导致es动态识别该类型时，识别成了boolean类型</p>
+<p>查阅官网资料得知，如果一个字段是boolean类型：</p>
+<ul>
+<li>在<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.6/boolean.html" target="_blank" rel="noopener">Elasticsearch6.0版本之前</a>，可以接受可被解释为 true 或 false 的字符串和数字：<code>false</code>, <code>&quot;false&quot;</code>, <code>&quot;off&quot;</code>, <code>&quot;no&quot;</code>, <code>&quot;0&quot;</code>, <code>&quot;&quot; (empty string)</code>, <code>0</code>, <code>0.0</code></li>
+<li>而在<a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.0/boolean.html" target="_blank" rel="noopener">Elasticsearch6.0版本以后</a>只接受：<code>true</code>, <code>false</code>, <code>&quot;true&quot;</code>, <code>&quot;false&quot;</code></li>
+</ul>
+<p>2.增量同步时，由于全量同步时tinyiny(1)类型的数据转换成了boolean类型，但是binlog日志中仍然保持原tinyiny(1)类型，使用flink-es插入数据时发现es mapping类型不对应</p>
+<h2 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h2><p>1.第一种<br>手动将select出来的数据做cast类型转换，麻烦</p>
+<p>2.第二种<br>JDBC有专门针对tinyint(1)类型的设置，在JDBC URL后增加<code>tinyInt1isBit=false</code><br>该设置含义为：如果tinyInt1isBit =true(默认)，且tinyInt存储长度为1 ，则转为java.lang.Boolean，否则转为java.lang.Integer</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jdbc:mysql:<span class="comment">//127.0.0.1:60421/test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;tinyInt1isBit=false</span></span><br></pre></td></tr></table></figure><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -211,7 +263,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -224,70 +276,117 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/08/22/记一次Flink集成Elasticsearch的Trouble-shotings/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/22/记一次Flink提交作业的Trouble-Shotings/" class="archive-article-date">
-  	<time datetime="2020-08-22T09:09:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/22/记一次Flink提交作业的Trouble-Shotings/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记一次Flink提交作业的Trouble-Shotings</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/22/记一次Flink提交作业的Trouble-Shotings/">记一次Flink提交作业的Trouble-Shotings</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flink入门</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Trouble-shoting</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Technology//" class="article-tag-list-link color1">Technology</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trouble-shoting-one"><span class="toc-number">2.</span> <span class="toc-text">Trouble-shoting one</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">2.1.</span> <span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码细节"><span class="toc-number">2.2.</span> <span class="toc-text">代码细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深究原因"><span class="toc-number">2.3.</span> <span class="toc-text">深究原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">2.4.</span> <span class="toc-text">解决方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延伸知识"><span class="toc-number">2.5.</span> <span class="toc-text">延伸知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trouble-shoting-two"><span class="toc-number">3.</span> <span class="toc-text">Trouble-shoting two</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题-1"><span class="toc-number">3.1.</span> <span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深究原因-1"><span class="toc-number">3.2.</span> <span class="toc-text">深究原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法-1"><span class="toc-number">3.3.</span> <span class="toc-text">解决方法</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -319,9 +418,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
