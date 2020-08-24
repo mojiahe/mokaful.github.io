@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
 <meta property="og:description" content="背景在完成Flink作业开发之后，将Jar包上传到集群上运行时碰到了一些问题，记录、总结一下经验。 Trouble-shooting of one遇到的Trouble使用Flink Cli往Yarn集群提交作业时遇到错误如下：123456789101112131415161718192021222324252627282930java.lang.NoClassDefFoundError: org/">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-08-22T09:09:52.985Z">
+<meta property="og:updated_time" content="2020-08-24T03:11:47.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次Flink提交作业的Trouble-Shotings">
 <meta name="twitter:description" content="背景在完成Flink作业开发之后，将Jar包上传到集群上运行时碰到了一些问题，记录、总结一下经验。 Trouble-shooting of one遇到的Trouble使用Flink Cli往Yarn集群提交作业时遇到错误如下：123456789101112131415161718192021222324252627282930java.lang.NoClassDefFoundError: org/">
@@ -230,18 +230,18 @@
 <h1 id="Trouble-shooting-of-two"><a href="#Trouble-shooting-of-two" class="headerlink" title="Trouble-shooting of two"></a>Trouble-shooting of two</h1><h2 id="遇到的Trouble-1"><a href="#遇到的Trouble-1" class="headerlink" title="遇到的Trouble"></a>遇到的Trouble</h2><p>同样是使用Flink Cli往Yarn集群提交作业时，遇到的另一个错误：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.hadoop.hdfs.web.HftpFileSystem cannot access its superinterfa</span><br></pre></td></tr></table></figure></p>
 <h2 id="操作细节-1"><a href="#操作细节-1" class="headerlink" title="操作细节"></a>操作细节</h2><p>同 trouble one</p>
 <h2 id="深究原因-1"><a href="#深究原因-1" class="headerlink" title="深究原因"></a>深究原因</h2><p>发现工程引入了hadoop2.4.1的jar包：在Idea里面全局搜查<code>HftpFileSystem</code>这个类，发现他在我的工程下的<code>flink-shaded-hadoop-2-2.4.1-9.0.jar</code>这个Jar包里面引入的。</p>
-<pre><code>查看集群目前的Hadoop是3.1.5
-
-细心一想，在trouble shoting one中使用的是集群的hadoop的依赖，而此时工程中又引入了另外一个版本的hadoop依赖，万恶之源-版本不对应
-</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>将工程中相关的<code>flink-shaded-hadoop-2</code>排除掉</p>
+<p>查看集群目前的Hadoop是3.1.5。</p>
+<p>细心一想，在trouble shoting one中使用的是集群的hadoop的依赖，而此时工程中又引入了另外一个版本的hadoop依赖，万恶之源-版本不对应。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>将工程中相关的<code>flink-shaded-hadoop-2</code>排除掉</p>
 <h1 id="Trouble-shoting-three"><a href="#Trouble-shoting-three" class="headerlink" title="Trouble shoting three"></a>Trouble shoting three</h1><h2 id="遇到的Trouble-2"><a href="#遇到的Trouble-2" class="headerlink" title="遇到的Trouble"></a>遇到的Trouble</h2><p>经过前两个trouble shoting终于将作业运行起来了，但是运行期间又报错了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.NoSuchMethodError: com.google.common.base.Preconditions.checkArgument(ZLjava/lang/String;Ljava/lang/Object;)V</span><br></pre></td></tr></table></figure></p>
 <h2 id="操作细节-2"><a href="#操作细节-2" class="headerlink" title="操作细节"></a>操作细节</h2><p>同trouble shoting one，运行起来之后在flink web ui上查看到作业running之后转换成了restart了</p>
 <h2 id="深究原因-2"><a href="#深究原因-2" class="headerlink" title="深究原因"></a>深究原因</h2><p>从报错信息来看，信息是<code>java.lang.NoSuchMethodError</code>，典型的Java报错，无外乎两种原因：</p>
 <pre><code>1. 运行过程中，找不到相关jar包
 2. 同一类型的 jar 包有不同版本存在，系统无法决定使用哪一个
-
-&gt; 拓展一下：`NoSuchMethodError`是运行时JVM中没有相关类，`ClassnotFoundExption`是编译时发现没有相关类
-</code></pre><p>接着，使用vim命令查看我的jar，搜索这个类，明显存在，而且这个类是<code>com.google.common.base.Preconditions.checkArgument</code>是来自guava包，那很明显是这个guava在运行时存在了多个版本</p>
+</code></pre><blockquote>
+<p>拓展一下：<code>NoSuchMethodError</code>是运行时JVM中没有相关类，<code>ClassnotFoundExption</code>是编译时发现没有相关类</p>
+</blockquote>
+<p>接着，使用vim命令查看我的jar，搜索这个类，明显存在，而且这个类是<code>com.google.common.base.Preconditions.checkArgument</code>是来自guava包，那很明显是这个guava在运行时存在了多个版本</p>
 <p>Flink运行作业时会加载Flink Home/lib下的jar包和Hadoop classpath的jar包<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@test-spark-3 hadoop-client]# ll lib | grep guava</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root <span class="number">2746681</span> Aug <span class="number">23</span>  <span class="number">2019</span> guava-<span class="number">28.0</span>-jre.jar</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root    <span class="number">2199</span> Aug <span class="number">23</span>  <span class="number">2019</span> listenablefuture-<span class="number">9999.0</span>-empty-to-avoid-conflict-with-guava.jar</span><br><span class="line">[root@test-spark-3 hadoop-client]# pwd</span><br><span class="line">/usr/hdp/current/hadoop-client</span><br></pre></td></tr></table></figure></p>
 <p>果然是guava包版本冲突</p>
 <h2 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h2><p>这种情况，可以使用<code>maven-shade-plugin</code>插件的<code>relocation</code>功能将自己工程下的guava起别名</p>
