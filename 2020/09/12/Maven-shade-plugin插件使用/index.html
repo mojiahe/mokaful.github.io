@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://www.mokaful.fun">
-  <title>Archives: 2020/7 | Mokaful&#39;s Blog</title>
+  <title>Maven-shade-plugin插件使用 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Mokaful&#39;s Blog">
-<meta property="og:url" content="https://www.mokaful.fun/archives/2020/07/index.html">
+  <meta name="description" content="前言Jar包的逻辑分类众所周知，在我们完成Java代码的编写之后，我们需要将代码和相关的依赖通过Maven打包成一个Jar包来运行。而这时，Jar包从内容的组织形式上来看，可以分为两种：  Uber Jar：又叫Fat Jar，包含所有第三方依赖 普通Jar：又叫Thin Jar，只有核心代码  常见痛点在进行Java体系开发的过程中，我们会常常遇见一些超越实现业务逻辑的问题：  代码写好后的Ja">
+<meta name="keywords" content="Maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven-shade-plugin插件使用">
+<meta property="og:url" content="https://www.mokaful.fun/2020/09/12/Maven-shade-plugin插件使用/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
+<meta property="og:description" content="前言Jar包的逻辑分类众所周知，在我们完成Java代码的编写之后，我们需要将代码和相关的依赖通过Maven打包成一个Jar包来运行。而这时，Jar包从内容的组织形式上来看，可以分为两种：  Uber Jar：又叫Fat Jar，包含所有第三方依赖 普通Jar：又叫Thin Jar，只有核心代码  常见痛点在进行Java体系开发的过程中，我们会常常遇见一些超越实现业务逻辑的问题：  代码写好后的Ja">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-09-12T10:36:07.102Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mokaful&#39;s Blog">
+<meta name="twitter:title" content="Maven-shade-plugin插件使用">
+<meta name="twitter:description" content="前言Jar包的逻辑分类众所周知，在我们完成Java代码的编写之后，我们需要将代码和相关的依赖通过Maven打包成一个Jar包来运行。而这时，Jar包从内容的组织形式上来看，可以分为两种：  Uber Jar：又叫Fat Jar，包含所有第三方依赖 普通Jar：又叫Thin Jar，只有核心代码  常见痛点在进行Java体系开发的过程中，我们会常常遇见一些超越实现业务逻辑的问题：  代码写好后的Ja">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -162,48 +167,111 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Maven-shade-plugin插件使用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/01/DolphinScheduler开发环境搭建/" class="archive-article-date">
-  	<time datetime="2020-07-01T10:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/01/DolphinScheduler开发环境搭建/">DolphinScheduler开发环境搭建</a>
+    <h1 class="article-title" itemprop="name">
+      Maven-shade-plugin插件使用
     </h1>
   
 
-        <div class="article-info info-on-right">
+        
+        <a href="/2020/09/12/Maven-shade-plugin插件使用/" class="archive-article-date">
+  	<time datetime="2020-09-12T10:36:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-12</time>
+</a>
+        
+       
+            <span class="archive-article-date">
+              阅读量 <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+         <!-- 开始添加字数统计-->
+        
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.4k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">7分</span>
+      </span>
+    </span>
+</div>
           
+        <!-- 添加完成 -->
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="Jar包的逻辑分类"><a href="#Jar包的逻辑分类" class="headerlink" title="Jar包的逻辑分类"></a>Jar包的逻辑分类</h2><p>众所周知，在我们完成Java代码的编写之后，我们需要将代码和相关的依赖通过Maven打包成一个Jar包来运行。而这时，Jar包从内容的组织形式上来看，可以分为两种：</p>
+<ul>
+<li>Uber Jar：又叫Fat Jar，包含所有第三方依赖</li>
+<li>普通Jar：又叫Thin Jar，只有核心代码</li>
+</ul>
+<h2 id="常见痛点"><a href="#常见痛点" class="headerlink" title="常见痛点"></a>常见痛点</h2><p>在进行Java体系开发的过程中，我们会常常遇见一些超越实现业务逻辑的问题：</p>
+<ul>
+<li>代码写好后的Jar包冲突，明明在本地调试的时候完美运行但去到服务器上却运行不起来</li>
+<li>Spring的META-INF/spring.*文件相互覆盖</li>
+<li>打包时，如何选择一些我不想要的类进行定向引入和排除</li>
+</ul>
+<h1 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h1><p><code>Maven-Shade-Plugin</code> 是啥？</p>
+<p><a href="https://maven.apache.org/plugins/maven-shade-plugin/index.html" target="_blank" rel="noopener">Apache Maven Shade Plugin - Introduction</a></p>
+<p><code>Maven-Shade-Plugin</code> 是一个由Apache maven提供的、应用于package阶段的插件，它具有如下特性：</p>
+<ul>
+<li>默认包含所有依赖包</li>
+<li>重命名依赖的包名</li>
+<li>选择性的引用依赖</li>
+</ul>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="配置插件"><a href="#配置插件" class="headerlink" title="配置插件"></a>配置插件</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;shade&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">              &lt;minimizeJar&gt;true&lt;/minimizeJar&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">          &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>说明：执行<code>maven clean package</code>，会在target目录下生成一个 uber-jar，以 -shaded.jar 为后缀的 jar 包</p>
+<h2 id="Selecting-Contents-for-Uber-JAR"><a href="#Selecting-Contents-for-Uber-JAR" class="headerlink" title="Selecting Contents for Uber JAR"></a>Selecting Contents for Uber JAR</h2><h3 id="将未使用的依赖排除"><a href="#将未使用的依赖排除" class="headerlink" title="将未使用的依赖排除"></a>将未使用的依赖排除</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;shade&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">              &lt;minimizeJar&gt;true&lt;/minimizeJar&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">          &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>注意：使用<code>minimizeJar</code>必须是JDK1.8以上，</p>
+<p>说明：<code>maven-shade-plugin</code> 自动将所有不使用的类全部排除掉，将 uber-jar 最小化。</p>
+<h3 id="定向依赖引入与排除"><a href="#定向依赖引入与排除" class="headerlink" title="定向依赖引入与排除"></a>定向依赖引入与排除</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;shade&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">               &lt;artifactSet&gt;</span><br><span class="line">                  &lt;excludes&gt;</span><br><span class="line">                      &lt;exclude&gt;org.apache.flink:force-shading&lt;/exclude&gt;</span><br><span class="line">                      &lt;exclude&gt;com.google.code.findbugs:jsr305&lt;/exclude&gt;</span><br><span class="line">                      &lt;exclude&gt;org.slf4j:*&lt;/exclude&gt;</span><br><span class="line">                      &lt;!--es使用的log4j2，将log4j1的依赖移除--&gt;</span><br><span class="line">                      &lt;exclude&gt;log4j:*&lt;/exclude&gt;</span><br><span class="line">                  &lt;/excludes&gt;</span><br><span class="line">              &lt;/artifactSet&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">          &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>说明：Artifacts的格式为<code>groupId:artifactId:type:classifier</code> ，支持<code>*</code>和<code>?</code></p>
+<h3 id="定向类或者资源的引入与排除"><a href="#定向类或者资源的引入与排除" class="headerlink" title="定向类或者资源的引入与排除"></a>定向类或者资源的引入与排除</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;shade&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">               &lt;filters&gt;</span><br><span class="line">                &lt;filter&gt;</span><br><span class="line">                  &lt;artifact&gt;junit:junit&lt;/artifact&gt;</span><br><span class="line">                  &lt;includes&gt;</span><br><span class="line">                    &lt;include&gt;junit/framework<span class="comment">/**&lt;/include&gt;</span></span><br><span class="line"><span class="comment">                    &lt;include&gt;org/junit/**&lt;/include&gt;</span></span><br><span class="line"><span class="comment">                  &lt;/includes&gt;</span></span><br><span class="line"><span class="comment">                  &lt;excludes&gt;</span></span><br><span class="line"><span class="comment">                    &lt;exclude&gt;org/junit/experimental/**&lt;/exclude&gt;</span></span><br><span class="line"><span class="comment">                    &lt;exclude&gt;org/junit/runners/**&lt;/exclude&gt;</span></span><br><span class="line"><span class="comment">                  &lt;/excludes&gt;</span></span><br><span class="line"><span class="comment">                &lt;/filter&gt;</span></span><br><span class="line"><span class="comment">                &lt;filter&gt;</span></span><br><span class="line"><span class="comment">                  &lt;artifact&gt;*:*&lt;/artifact&gt;</span></span><br><span class="line"><span class="comment">                  &lt;excludes&gt;</span></span><br><span class="line"><span class="comment">                    &lt;exclude&gt;META-INF/*.SF&lt;/exclude&gt;</span></span><br><span class="line"><span class="comment">                    &lt;exclude&gt;META-INF/*.DSA&lt;/exclude&gt;</span></span><br><span class="line"><span class="comment">                    &lt;exclude&gt;META-INF/*.RSA&lt;/exclude&gt;</span></span><br><span class="line"><span class="comment">                  &lt;/excludes&gt;</span></span><br><span class="line"><span class="comment">                &lt;/filter&gt;</span></span><br><span class="line"><span class="comment">              &lt;/filters&gt;</span></span><br><span class="line"><span class="comment">            &lt;/configuration&gt;</span></span><br><span class="line"><span class="comment">          &lt;/execution&gt;</span></span><br><span class="line"><span class="comment">        &lt;/executions&gt;</span></span><br><span class="line"><span class="comment">      &lt;/plugin&gt;</span></span><br><span class="line"><span class="comment">    &lt;/plugins&gt;</span></span><br><span class="line"><span class="comment">  &lt;/build&gt;</span></span><br></pre></td></tr></table></figure>
+<p>说明：// TODO</p>
+<h2 id="Attaching-the-Shaded-Artifact"><a href="#Attaching-the-Shaded-Artifact" class="headerlink" title="Attaching the Shaded Artifact"></a>Attaching the Shaded Artifact</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;shade&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">              &lt;shadedArtifactAttached&gt;true&lt;/shadedArtifactAttached&gt;</span><br><span class="line">              &lt;shadedClassifierName&gt;jackofall&lt;/shadedClassifierName&gt; &lt;!-- Any name that makes sense --&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">          &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>说明：默认会生成一个Jar包和一个以 “-shaded”为结尾的uber-jar包，可以通过配置<code>shadedClassifierName</code>来指定uber-jar的后缀名</p>
+<h2 id="Executable-JAR"><a href="#Executable-JAR" class="headerlink" title="Executable JAR"></a>Executable JAR</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;shade&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">						&lt;configuration&gt;</span><br><span class="line">              &lt;transformers&gt;</span><br><span class="line">                &lt;transformer implementation=<span class="string">"org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"</span>&gt;</span><br><span class="line">                  &lt;mainClass&gt;org.sonatype.haven.HavenCli&lt;/mainClass&gt;</span><br><span class="line">                &lt;/transformer&gt;</span><br><span class="line">              &lt;/transformers&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">          &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>说明：通过设置 MainClass 创建一个可执行 Jar 包</p>
+<h2 id="Relocating-Classes"><a href="#Relocating-Classes" class="headerlink" title="Relocating Classes"></a>Relocating Classes</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">          &lt;execution&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">              &lt;goal&gt;shade&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">						&lt;configuration&gt;</span><br><span class="line">              &lt;relocations&gt;</span><br><span class="line">                   &lt;relocation&gt;</span><br><span class="line">                       &lt;pattern&gt;com.google.common&lt;/pattern&gt;</span><br><span class="line">                       &lt;shadedPattern&gt;multiV.com.google.common&lt;/shadedPattern&gt;</span><br><span class="line">                   &lt;/relocation&gt;</span><br><span class="line">              &lt;/relocations&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">          &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">  &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>说明：把项目中依赖的 jar 包中的一些类文件打包到项目构建生成的 jar 包中，在打包的时候把类重命名。该配置是将 <code>com.google.common</code>包重命名为 <code>multiV.com.google.common</code></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><p><a href="https://www.mokaful.fun/2020/08/22/%E8%AE%B0%E4%B8%80%E6%AC%A1Flink%E9%9B%86%E6%88%90Elasticsearch%E7%9A%84Trouble-shotings/">记一次Flink集成Elasticsearch的Trouble-Shotings</a></p>
+<p><a href="https://www.mokaful.fun/2020/08/22/%E8%AE%B0%E4%B8%80%E6%AC%A1Flink%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A%E7%9A%84Trouble-Shotings/">记一次Flink提交作业的Trouble-Shotings</a></p>
+<p><a href="https://www.playpi.org/2019120101.html" target="_blank" rel="noopener">解决 jar 包冲突的神器：maven-shade-plugin</a></p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">DolphinScheduler</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Maven</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -216,17 +284,117 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://www.mokaful.fun/2020/09/12/Maven-shade-plugin插件使用/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/08/22/记一次Flink集成Elasticsearch的Trouble-shotings/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记一次Flink集成Elasticsearch的Trouble-Shotings</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Jar包的逻辑分类"><span class="toc-number">1.1.</span> <span class="toc-text">Jar包的逻辑分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见痛点"><span class="toc-number">1.2.</span> <span class="toc-text">常见痛点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#概括"><span class="toc-number">2.</span> <span class="toc-text">概括</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置插件"><span class="toc-number">3.1.</span> <span class="toc-text">配置插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Selecting-Contents-for-Uber-JAR"><span class="toc-number">3.2.</span> <span class="toc-text">Selecting Contents for Uber JAR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#将未使用的依赖排除"><span class="toc-number">3.2.1.</span> <span class="toc-text">将未使用的依赖排除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定向依赖引入与排除"><span class="toc-number">3.2.2.</span> <span class="toc-text">定向依赖引入与排除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定向类或者资源的引入与排除"><span class="toc-number">3.2.3.</span> <span class="toc-text">定向类或者资源的引入与排除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Attaching-the-Shaded-Artifact"><span class="toc-number">3.3.</span> <span class="toc-text">Attaching the Shaded Artifact</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Executable-JAR"><span class="toc-number">3.4.</span> <span class="toc-text">Executable JAR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Relocating-Classes"><span class="toc-number">3.5.</span> <span class="toc-text">Relocating Classes</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#案例"><span class="toc-number">4.</span> <span class="toc-text">案例</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -258,8 +426,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
