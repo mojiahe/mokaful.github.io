@@ -164,6 +164,148 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Prometheus监控入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/mokaful.github.io/2020/11/25/Prometheus监控入门/">Prometheus监控入门</a>
+    </h1>
+  
+
+        
+        <a href="/mokaful.github.io/2020/11/25/Prometheus监控入门/" class="archive-article-date">
+  	<time datetime="2020-11-25T07:27:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-25</time>
+</a>
+        
+       
+         <!-- 开始添加字数统计-->
+        
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">737字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">3分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h1 id="Prometheus生态架构"><a href="#Prometheus生态架构" class="headerlink" title="Prometheus生态架构"></a>Prometheus生态架构</h1><p><img src="/images/2020/11/25/5ff70de0-2eef-11eb-afa2-df0932f41c94.png" alt="Untitled.png"></p>
+<ul>
+<li>角色解析：<ul>
+<li>Flink App：通过report 将数据发出去metric信息</li>
+<li>Pushgateway： Prometheus 生态中一个重要工具</li>
+<li>Prometheus：一套开源的系统监控报警框架 （<a href="https://www.ibm.com/developerworks/cn/cloud/library/cl-lo-prometheus-getting-started-and-practice/index.html" target="_blank" rel="noopener">Prometheus 入门与实践</a>）</li>
+<li>Grafana：一个跨平台的开源的度量分析和可视化工具，可以通过将采集的数据查询然后可视化的展示，并及时通知（<a href="https://www.cnblogs.com/imyalost/p/9873641.html" target="_blank" rel="noopener">可视化工具Grafana：简介及安装</a>）</li>
+<li>Node_exporter：跟Pushgateway一样是Prometheus 的组件，采集到主机的运行指标如CPU, 内存，磁盘等信息</li>
+</ul>
+</li>
+</ul>
+<h1 id="使用docker安装组件"><a href="#使用docker安装组件" class="headerlink" title="使用docker安装组件"></a>使用docker安装组件</h1><h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull prom/node-exporter</span><br><span class="line">docker pull prom/prometheus</span><br><span class="line">docker pull grafana/grafana</span><br><span class="line">docker pull prom/pushgateway</span><br></pre></td></tr></table></figure>
+<h2 id="启动Prometheus"><a href="#启动Prometheus" class="headerlink" title="启动Prometheus"></a>启动Prometheus</h2><h3 id="准备配置"><a href="#准备配置" class="headerlink" title="准备配置"></a>准备配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mkdir /tmp/metrics/prometheus</span><br><span class="line"><span class="built_in">cd</span> /tmp/metrics/prometheus</span><br><span class="line">vim prometheus.yml</span><br><span class="line"></span><br><span class="line">global:</span><br><span class="line">  <span class="comment"># 默认情况下，每15s拉取一次目标采样点数据。</span></span><br><span class="line">  scrape_interval:     15s</span><br><span class="line">  <span class="comment"># 我们可以附加一些指定标签到采样点度量标签列表中, 用于和第三方系统进行通信, 包括：federation, remote storage, Alertmanager</span></span><br><span class="line">  external_labels:</span><br><span class="line">    <span class="comment"># 下面就是拉取自身服务采样点数据配置</span></span><br><span class="line">    monitor: <span class="string">'codelab-monitor'</span></span><br><span class="line">scrape_configs:</span><br><span class="line">  <span class="comment"># job名称会增加到拉取到的所有采样点上，同时还有一个instance目标服务的host：port标签也会增加到采样点上</span></span><br><span class="line">  - job_name: prometheus</span><br><span class="line">    <span class="comment"># 覆盖global的采样点，拉取时间间隔5s</span></span><br><span class="line">    scrape_interval: 5s</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets: [<span class="string">'192.168.108.93:9090'</span>]</span><br><span class="line"></span><br><span class="line">  - job_name: mac</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets: [<span class="string">'192.168.108.93:9100'</span>]</span><br><span class="line">        labels:</span><br><span class="line">          instance: mac</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：配置promethues.yml时要使用IP地址替换localhost</p>
+</blockquote>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run  -d \</span><br><span class="line">  -p 9090:9090 \</span><br><span class="line">  -v /tmp/metrics/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml  \</span><br><span class="line">  prom/prometheus \</span><br><span class="line">  --config.file=/etc/prometheus/prometheus.yml \</span><br><span class="line">  --web.enable-lifecycle</span><br></pre></td></tr></table></figure>
+<h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p><a href="http://localhost:9090/metrics" target="_blank" rel="noopener">http://localhost:9090/metrics</a></p>
+<p><a href="http://localhost:9090/graph" target="_blank" rel="noopener">http://localhost:9090/graph</a></p>
+<p><img src="/images/2020/11/25/92d583e0-2eef-11eb-afa2-df0932f41c94.png" alt="Untitled 2.png"><br>输入<code>up</code>查看配置的job是否正常启动</p>
+<h2 id="启动Node-exporter"><a href="#启动Node-exporter" class="headerlink" title="启动Node-exporter"></a>启动Node-exporter</h2><h3 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 9100:9100 \</span><br><span class="line">  -v <span class="string">"/proc:/host/proc:ro"</span> \</span><br><span class="line">  -v <span class="string">"/sys:/host/sys:ro"</span> \</span><br><span class="line">  -v <span class="string">"/:/rootfs:ro"</span> \</span><br><span class="line">  prom/node-exporter</span><br></pre></td></tr></table></figure>
+<h3 id="访问-1"><a href="#访问-1" class="headerlink" title="访问"></a>访问</h3><p><a href="http://localhost:9100/metrics" target="_blank" rel="noopener"></a></p>
+<h2 id="启动Pushgateway"><a href="#启动Pushgateway" class="headerlink" title="启动Pushgateway"></a>启动Pushgateway</h2><h3 id="启动-2"><a href="#启动-2" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 9091:9091 prom/pushgateway</span><br></pre></td></tr></table></figure>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>再次编辑<code>prometheus.yml</code>，增加<code>pushgateway</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">global:</span><br><span class="line">  <span class="comment"># 默认情况下，每15s拉取一次目标采样点数据。</span></span><br><span class="line">  scrape_interval:     15s</span><br><span class="line">  <span class="comment"># 我们可以附加一些指定标签到采样点度量标签列表中, 用于和第三方系统进行通信, 包括：federation, remote storage, Alertmanager</span></span><br><span class="line">  external_labels:</span><br><span class="line">    <span class="comment"># 下面就是拉取自身服务采样点数据配置</span></span><br><span class="line">    monitor: <span class="string">'codelab-monitor'</span></span><br><span class="line">scrape_configs:</span><br><span class="line">  <span class="comment"># job名称会增加到拉取到的所有采样点上，同时还有一个instance目标服务的host：port标签也会增加到采样点上</span></span><br><span class="line">  - job_name: prometheus</span><br><span class="line">    <span class="comment"># 覆盖global的采样点，拉取时间间隔5s</span></span><br><span class="line">    scrape_interval: 5s</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets: [<span class="string">'192.168.108.93:9090'</span>]</span><br><span class="line"></span><br><span class="line">  - job_name: mac</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets: [<span class="string">'192.168.108.93:9100'</span>]</span><br><span class="line">        labels:</span><br><span class="line">          instance: mac</span><br><span class="line"></span><br><span class="line">  - job_name: pushgateway</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets: [<span class="string">'192.168.108.93:9091'</span>]</span><br><span class="line">        labels:</span><br><span class="line">          instance: pushgateway</span><br></pre></td></tr></table></figure>
+<h3 id="访问-2"><a href="#访问-2" class="headerlink" title="访问"></a>访问</h3><p><a href="http://localhost:9091/" target="_blank" rel="noopener"></a></p>
+<p>这时，页面会显示两行记录（刚安装未配置重启prometheus时会没有记录）</p>
+<p><img src="/images/2020/11/25/a01934c0-2eef-11eb-afa2-df0932f41c94.png" alt="Untitled 1.png"></p>
+<h2 id="启动Grafana"><a href="#启动Grafana" class="headerlink" title="启动Grafana"></a>启动Grafana</h2><h3 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /tmp/metrics/grafana-storage</span><br><span class="line">chmod 777 -R /tmp/metrics/grafana-storage</span><br></pre></td></tr></table></figure>
+<h3 id="启动-3"><a href="#启动-3" class="headerlink" title="启动"></a>启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  -p 3000:3000 \</span><br><span class="line">  --name=grafana \</span><br><span class="line">  -v /tmp/metrics/grafana-storage:/var/lib/grafana \</span><br><span class="line">  grafana/grafana</span><br></pre></td></tr></table></figure>
+<h3 id="访问-3"><a href="#访问-3" class="headerlink" title="访问"></a>访问</h3><p><a href="http://127.0.0.1:3000/?orgId=1" target="_blank" rel="noopener"></a></p>
+<blockquote>
+<p>初始密码为admin / admin，另外Grafana的告警不能对含有变量的query进行配置，需要另起一个panel或者增加一个隐藏的query</p>
+</blockquote>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Prometheus</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/mokaful.github.io/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/mokaful.github.io/2020/11/25/Prometheus监控入门/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SQL开发平台之UDF函数开发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1528,128 +1670,6 @@
 
 
   
-    <article id="post-关于学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/mokaful.github.io/2020/04/16/关于学习/">关于学习</a>
-    </h1>
-  
-
-        
-        <a href="/mokaful.github.io/2020/04/16/关于学习/" class="archive-article-date">
-  	<time datetime="2020-04-16T04:51:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
-</a>
-        
-       
-         <!-- 开始添加字数统计-->
-        
-          <div class="archive-article-date">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">191字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
-      </span>
-    </span>
-</div>
-          
-        <!-- 添加完成 -->
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-  
-    <h1 id="初入江湖"><a href="#初入江湖" class="headerlink" title="初入江湖"></a>初入江湖</h1><p><img src="/images/2020/04/16/bb60e030-7f9e-11ea-ae34-0f26a51d528a.jpg" alt="初入江湖.jpg"><br>身为一名20岁出头的江湖人士</p>
-<p>江湖上的人和事太多太多</p>
-<p>无论是在工作层面还是生活层面上</p>
-<p>我都需要学会如何去快速、有效地学习</p>
-<h1 id="学习心法"><a href="#学习心法" class="headerlink" title="学习心法"></a>学习心法</h1><p>天下武功，招式其外，心法唯上</p>
-<p>我的心法：</p>
-<ul>
-<li>先观其势：知道它是什么东西，作用是什么</li>
-<li>模仿学习：上Hello World呆萌，掌握基本概念</li>
-<li>深入底层：深入概念之下的实现原理</li>
-<li>思考优劣：深究设计思路，思考场景下优势劣势</li>
-<li>融会贯通：取其精华，将设计思路融为一体</li>
-</ul>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>噫吁嚱，危乎高哉！<br>蜀道之難，難於上青天！<br>青天虽难，我亦上下而求索！</p>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Day Day Up</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/mokaful.github.io/categories/Thinking//" class="article-tag-list-link color4">Thinking</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/mokaful.github.io/2020/04/16/关于学习/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/mokaful.github.io/page/2/">2</a><a class="page-number" href="/mokaful.github.io/page/3/">3</a><a class="extend next" rel="next" href="/mokaful.github.io/page/2/">Next &raquo;</a>
@@ -1768,11 +1788,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Elasticsearch</a>
+                <a href="javascript:void(0)" class="js-tag color2">DolphinScheduler</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">DolphinScheduler</a>
+                <a href="javascript:void(0)" class="js-tag color4">Elasticsearch</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1784,6 +1804,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Maven</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Flink</a>
               </li>
              
@@ -1792,11 +1816,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Maven</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常运维</a>
+                <a href="javascript:void(0)" class="js-tag color1">Day Day Up</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1804,7 +1828,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Day Day Up</a>
+                <a href="javascript:void(0)" class="js-tag color1">Prometheus</a>
               </li>
             
             <div class="clearfix"></div>
