@@ -6,16 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://momobuzuosheng.gitee.io">
-  <title>文章分类 | Mokaful&#39;s Blog</title>
+  <title>Flink搭配Prometheus监控作业 | Mokaful&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="文章分类">
-<meta property="og:url" content="https://momobuzuosheng.gitee.io/categories/index.html">
+  <meta name="description" content="Flink配置Prometheus 在conf/flink-conf.yaml下增加配置  123456789101112#==============================================================================## metrics monitor#=========================================">
+<meta name="keywords" content="Flink,Prometheus,Flink监控">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flink搭配Prometheus监控作业">
+<meta property="og:url" content="https://momobuzuosheng.gitee.io/2020/11/25/Flink搭配Prometheus监控作业/index.html">
 <meta property="og:site_name" content="Mokaful&#39;s Blog">
+<meta property="og:description" content="Flink配置Prometheus 在conf/flink-conf.yaml下增加配置  123456789101112#==============================================================================## metrics monitor#=========================================">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-23T09:12:45.000Z">
+<meta property="og:image" content="https://momobuzuosheng.gitee.io/images/2020/11/25/3c739a90-2ef0-11eb-afa2-df0932f41c94.png">
+<meta property="og:updated_time" content="2020-11-25T07:31:37.932Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文章分类">
+<meta name="twitter:title" content="Flink搭配Prometheus监控作业">
+<meta name="twitter:description" content="Flink配置Prometheus 在conf/flink-conf.yaml下增加配置  123456789101112#==============================================================================## metrics monitor#=========================================">
+<meta name="twitter:image" content="https://momobuzuosheng.gitee.io/images/2020/11/25/3c739a90-2ef0-11eb-afa2-df0932f41c94.png">
   
     <link rel="alternative" href="/atom.xml" title="Mokaful&#39;s Blog" type="application/atom+xml">
   
@@ -163,45 +169,110 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-Flink搭配Prometheus监控作业" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      文章分类
+      Flink搭配Prometheus监控作业
     </h1>
   
 
         
-        <a href="/mokaful.github.io/categories/index.html" class="archive-article-date">
-  	<time datetime="2019-07-23T08:43:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-23</time>
+        <a href="/mokaful.github.io/2020/11/25/Flink搭配Prometheus监控作业/" class="archive-article-date">
+  	<time datetime="2020-11-25T07:31:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-25</time>
 </a>
         
        
+            <span class="archive-article-date">
+              阅读量 <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
          <!-- 开始添加字数统计-->
         
+          <div class="archive-article-date">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">490字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+          
         <!-- 添加完成 -->
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
 
-<div class="category-all-page">
- 
-  <div class="category-all">
-  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/mokaful.github.io/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/mokaful.github.io/categories/Technology/">Technology</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/mokaful.github.io/categories/Thinking/">Thinking</a><span class="category-list-count">1</span></li></ul>
-  </div>
   
-</div>
-
+    <h1 id="Flink配置Prometheus"><a href="#Flink配置Prometheus" class="headerlink" title="Flink配置Prometheus"></a>Flink配置Prometheus</h1><ol>
+<li><p>在conf/flink-conf.yaml下增加配置</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#==============================================================================</span></span><br><span class="line"><span class="comment">## metrics monitor</span></span><br><span class="line"><span class="comment">#==============================================================================</span></span><br><span class="line">metrics.reporter.promgateway.class: org.apache.flink.metrics.prometheus.PrometheusPushGatewayReporter</span><br><span class="line">metrics.reporter.promgateway.host: spark-2</span><br><span class="line">metrics.reporter.promgateway.port: 9091</span><br><span class="line">metrics.reporter.promgateway.jobName: lyra-</span><br><span class="line">metrics.reporter.promgateway.randomJobNameSuffix: <span class="literal">true</span></span><br><span class="line"><span class="comment"># 不开启deleteOnShutdown情况下 任务结束之后prometheus还会采集旧值</span></span><br><span class="line">metrics.reporter.promgateway.deleteOnShutdown: <span class="literal">true</span></span><br><span class="line">metrics.reporter.promgateway.interval: 3 SECONDS</span><br><span class="line"><span class="comment">##metrics.reporter.promgateway.groupingKey: k1=v1;k2=v2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载对应版本的jar包<code>flink-metrics-prometheus_2.12-1.10.0.jar</code>，并把它放到<code>${flink_home}/lib</code>下</p>
+</li>
+</ol>
+<p>至此，Flink配置完成，后面只需要在flink作业内部创建metrics，就可以自动把对应的指标收集到prometheus了</p>
+<h1 id="作业编写与运行"><a href="#作业编写与运行" class="headerlink" title="作业编写与运行"></a>作业编写与运行</h1><ol>
+<li><p>作业编写</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yixiangkai.bigdata.lyra.flink.connector.common.UMSRecord;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.annotation.PublicEvolving;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.configuration.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.metrics.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.runtime.state.FunctionInitializationContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.runtime.state.FunctionSnapshotContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.connectors.elasticsearch.ActionRequestFailureHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.connectors.elasticsearch.ElasticsearchSinkBase;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.connectors.elasticsearch.ElasticsearchSinkFunction;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.connectors.elasticsearch.util.NoOpFailureHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.connectors.elasticsearch7.RestClientFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.util.Preconditions;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpHost;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RestHighLevelClient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.Objects;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Elasticsearch7SinkWithMetrics</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">ElasticsearchSinkBase</span>&lt;<span class="title">T</span>, <span class="title">RestHighLevelClient</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Meter processingRateMeter;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Counter processingCntCounter;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Long fullDelay;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Long binlogTs;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> String gtid;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Elasticsearch7SinkWithMetrics</span><span class="params">(Map&lt;String, String&gt; bulkRequestsConfig, List&lt;HttpHost&gt; httpHosts, ElasticsearchSinkFunction&lt;T&gt; elasticsearchSinkFunction,</span></span></span><br><span class="line"><span class="function"><span class="params">                                    ActionRequestFailureHandler failureHandler, RestClientFactory restClientFactory)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="keyword">new</span> Elasticsearch7ApiCallBridge(httpHosts, restClientFactory), bulkRequestsConfig, elasticsearchSinkFunction, failureHandler);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">open</span><span class="params">(Configuration parameters)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.open(parameters);</span><br><span class="line">        MetricGroup metricGroup = getRuntimeContext().getMetricGroup().addGroup(<span class="string">"es_data_sync"</span>);</span><br><span class="line">        processingCntCounter = metricGroup.counter(<span class="string">"processed_cnt"</span>);</span><br><span class="line">        processingRateMeter = metricGroup.meter(<span class="string">"processed_rate"</span>, <span class="keyword">new</span> MeterView(processingCntCounter));</span><br><span class="line">        metricGroup.gauge(<span class="string">"full_delay"</span>, (Gauge&lt;Long&gt;) () -&gt; fullDelay);</span><br><span class="line">        metricGroup.gauge(<span class="string">"gtid"</span>, (Gauge&lt;String&gt;) () -&gt; gtid);</span><br><span class="line">        metricGroup.gauge(<span class="string">"binlog_ts"</span>, (Gauge&lt;Long&gt;) () -&gt; binlogTs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invoke</span><span class="params">(T value, Context context)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.invoke(value, context);</span><br><span class="line">        saveMetrics((UMSRecord) value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initializeState</span><span class="params">(FunctionInitializationContext context)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.initializeState(context);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">snapshotState</span><span class="params">(FunctionSnapshotContext context)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.snapshotState(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">saveMetrics</span><span class="params">(UMSRecord value)</span> </span>&#123;</span><br><span class="line">        gtid = value.getGtid();</span><br><span class="line">        binlogTs = value.getTs();</span><br><span class="line">        fullDelay = System.currentTimeMillis() - binlogTs;</span><br><span class="line">        <span class="keyword">this</span>.processingCntCounter.inc();</span><br><span class="line">        <span class="keyword">this</span>.processingRateMeter.markEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行作业</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flink run -c pers.mokaful.datasync.job.EsDataSyncJob  /Users/mokaful/IdeaWorkspace/flink-datasync-job-<span class="number">1.0</span>-SNAPSHOT.jar --job.name data_sync_to_es</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="配置Grafana"><a href="#配置Grafana" class="headerlink" title="配置Grafana"></a>配置Grafana</h1><p><img src="/images/2020/11/25/3c739a90-2ef0-11eb-afa2-df0932f41c94.png" alt="Udd.png"></p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+  
 
     </div>
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Prometheus</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flink监控</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/mokaful.github.io/categories/Technology//" class="article-tag-list-link color1">Technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -251,7 +322,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://momobuzuosheng.gitee.io/categories/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://momobuzuosheng.gitee.io/2020/11/25/Flink搭配Prometheus监控作业/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -263,6 +334,16 @@
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/mokaful.github.io/2020/11/25/Prometheus监控入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Prometheus监控入门</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -284,7 +365,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Flink配置Prometheus"><span class="toc-number">1.</span> <span class="toc-text">Flink配置Prometheus</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#作业编写与运行"><span class="toc-number">2.</span> <span class="toc-text">作业编写与运行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置Grafana"><span class="toc-number">3.</span> <span class="toc-text">配置Grafana</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -294,6 +375,16 @@
 </aside>
 
 
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -325,7 +416,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
